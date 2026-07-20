@@ -1,0 +1,1519 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+  <title>CAIPEX — Intelligenz für den Bestand</title>
+<meta name="description" content="Fotografieren Sie Ihr Gebäude — CAIPEX erstellt den technischen Zustandsbericht: jedes Bauteil bewertet, jede Maßnahme mit Jahr und Kosten geplant. Für Kommunen, Verwalter, Asset Manager und Ingenieurbüros.">
+<meta property="og:title" content="CAIPEX — Intelligenz für den Bestand">
+<meta property="og:description" content="Aus Fotos und Bestandsunterlagen wird ein technischer Zustandsbericht — jedes Bauteil bewertet, jede Maßnahme mit Jahr und Kosten geplant.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://www.caipex.de/">
+<meta property="og:image" content="https://www.caipex.de/img/og-caipex.jpg">
+<meta property="og:locale" content="de_DE">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="canonical" href="https://www.caipex.de/">
+<link rel="icon" type="image/png" href="img/cpx-logo.png">
+<link rel="apple-touch-icon" href="img/cpx-logo.png">
+<link href="fonts/fonts.css" rel="stylesheet">
+<link rel="preload" href="fonts/SchibstedGrotesk-800-latin.woff2" as="font" type="font/woff2" crossorigin="">
+<link rel="preload" href="fonts/HankenGrotesk-400-latin.woff2" as="font" type="font/woff2" crossorigin="">
+<style>
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0;background:#ffffff;color:#0F2C27;font-family:'Hanken Grotesk',system-ui,sans-serif;font-weight:400;-webkit-font-smoothing:antialiased;overflow-x:hidden;}
+  @media (max-width:900px){
+    #anwendung{min-height:0 !important;}
+    .cpx-fw-grid{grid-template-columns:repeat(2,minmax(0,1fr)) !important;gap:44px 28px !important;}
+  }
+  /* Für-wen-Karten: editoriale Interaktion */
+  .cpx-fw-imgwrap{overflow:hidden;}
+  .cpx-fw-card .cpx-fw-img{display:block;width:100%;height:100%;transition:transform .7s cubic-bezier(.16,.7,.2,1);}
+  .cpx-fw-card:hover .cpx-fw-img{transform:scale(1.05);}
+  .cpx-fw-card .cpx-fw-rule{transition:width .5s cubic-bezier(.16,.7,.2,1);}
+  .cpx-fw-card:hover .cpx-fw-rule{width:56px;}
+  .cpx-fw-card .cpx-fw-num{transition:color .3s ease;}
+  .cpx-fw-card:hover .cpx-fw-num{color:#F15200;}
+  @media (max-width:520px){
+    .cpx-fw-grid{grid-template-columns:1fr !important;}
+    .cpx-hero-visual{min-width:0 !important;flex-basis:100% !important;height:470px !important;}
+    .cpx-hv-vf{width:200px !important;height:264px !important;}
+    .cpx-hv-twin{width:min(272px,80vw) !important;height:378px !important;}
+  }
+  /* Performance: Below-fold-Sektionen erst rendern, wenn sie in die Nähe des Viewports kommen */
+  #funktion,#prognose,#rollen,#preise,#live,#team,#faq{content-visibility:auto;contain-intrinsic-size:auto 900px;}
+  img{content-visibility:visible;}
+  ::selection{background:#F15200;color:#EDF0EF;}
+  input{font-family:inherit;}
+  @keyframes scan{0%{top:1.5%;opacity:0}10%{opacity:.9}90%{opacity:.9}100%{top:97%;opacity:0}}
+  @keyframes ring{to{transform:rotate(360deg)}}
+  @keyframes msgIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+  @keyframes fadeIn{from{opacity:0}to{opacity:1}}
+  @keyframes dots{0%,80%,100%{opacity:.2}40%{opacity:1}}
+  [data-reveal]{transform:translateY(28px);transition:transform .9s cubic-bezier(.16,.7,.2,1);}
+  [data-reveal][data-shown]{transform:none;}
+  [data-once]{opacity:0;}
+  [data-once="scan"][data-go="1"]{animation:scan 2.6s ease-in-out .15s 1 both;}
+  @keyframes rvIn{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+  @keyframes rvStamp{0%{opacity:0;transform:scale(1.7) rotate(-14deg)}55%{opacity:1;transform:scale(.94) rotate(-7deg)}100%{opacity:1;transform:scale(1) rotate(-7deg)}}
+  @keyframes rvLine{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+  [data-once="rv"][data-go="1"]{animation:rvIn .7s cubic-bezier(.16,.7,.2,1) both;animation-delay:var(--d,0s);}
+  [data-once="rvline"][data-go="1"]{animation:rvLine .8s cubic-bezier(.16,.7,.2,1) both;animation-delay:var(--d,.5s);transform-origin:left center;}
+  [data-once="rvstamp"][data-go="1"]{animation:rvStamp .55s cubic-bezier(.2,1.2,.3,1) both;animation-delay:var(--d,2s);}
+  [data-fwcard]{appearance:none;-webkit-appearance:none;cursor:pointer;border:1px solid rgba(15,44,39,0.12);border-bottom:3px solid transparent;background:#fff;padding:16px 12px;display:flex;flex-direction:column;align-items:center;gap:9px;text-align:center;font-family:inherit;color:#0F2C27;border-radius:8px;transition:border-color .25s ease,transform .2s ease;}
+  [data-fwcard]:hover{transform:translateY(-2px);}
+  [data-fwcard]:hover{box-shadow:none;}
+  [data-fwcard][data-fwst="scan"],[data-fwcard][data-fwst="on"]{border-bottom-color:#0F2C27;}
+  [data-fwcard]:focus-visible{outline:2px solid #F15200;outline-offset:2px;}
+  [data-fwscan]{position:absolute;left:0;right:0;top:0;height:16px;background:linear-gradient(rgba(241,82,0,0.20),rgba(241,82,0,0));border-top:1.5px solid #F15200;opacity:0;pointer-events:none;z-index:2;}
+  [data-fwcard][data-fwst="scan"] [data-fwscan]{animation:fwscan 1.35s ease forwards;}
+  [data-once="a-scan"][data-go="1"]{animation:fwscan 1.1s ease forwards;animation-delay:var(--d,0s);}
+  @keyframes fwscan{0%{opacity:1;top:0}85%{opacity:1}100%{opacity:0;top:100%}}
+  [data-fwlbl]{opacity:0;transition:opacity .4s ease;}
+  [data-fwcard][data-fwst="on"] [data-fwlbl]{opacity:1;}
+  [data-fwcard][data-fwst="on"] [data-fwlbl]:nth-of-type(2){transition-delay:.13s;}
+  [data-fwcard][data-fwst="on"] [data-fwlbl]:nth-of-type(3){transition-delay:.26s;}
+  [data-pricecard]{transition:border-color .25s ease,box-shadow .25s ease,transform .25s ease;}
+  [data-pricecard]:hover{border-color:#0F2C27;box-shadow:0 16px 34px -16px rgba(15,44,39,0.30);transform:translateY(-3px);}
+  [data-pricecard-dark]{transition:box-shadow .25s ease,transform .25s ease;}
+  [data-pricecard-dark]:hover{transform:translateY(-3px);box-shadow:0 40px 72px -30px rgba(15,44,39,0.55);}
+  /* Header: bold-on-hover ohne Layout-Shift + Orange-Unterstrich */
+  [data-navlink] .nl-bold{opacity:0;}
+  [data-navlink] .nl-norm{opacity:1;}
+  [data-navlink] .nl-ul{opacity:0;}
+  [data-navlink]:hover .nl-bold{opacity:1;}
+  [data-navlink]:hover .nl-norm{opacity:0;}
+  [data-navlink]:hover .nl-ul{opacity:1;}
+  /* Scroll-Spy: aktives Kapitel bleibt markiert */
+  [data-navlink] .nl-num{transition:color .15s ease;}
+  [data-navlink].is-active .nl-bold{opacity:1;}
+  [data-navlink].is-active .nl-norm{opacity:0;}
+  [data-navlink].is-active .nl-ul{opacity:1;}
+  [data-navlink].is-active .nl-num{color:#F15200;}
+  [data-stepcard]:hover{border-color:#0F2C27 !important;box-shadow:0 16px 34px -16px rgba(15,44,39,0.30);transform:translateY(-3px);}
+  [data-foundercard]:hover{border-color:#0F2C27 !important;box-shadow:0 16px 34px -16px rgba(15,44,39,0.30);transform:translateY(-3px);}
+  /* ---- Ruhige CTA-Buttons (dunkelgrün, Pfeil gleitet) ---- */
+  [data-cta]{transition:background-color .25s ease,transform .15s ease;}
+  [data-cta] .cta-arrow{display:inline-block;transition:transform .3s cubic-bezier(.16,.7,.2,1);}
+  [data-cta]:hover{background-color:#1A4038 !important;}
+  [data-cta]:hover .cta-arrow{transform:translateX(4px);}
+  [data-cta]:active{transform:scale(.985);}
+  [data-stepnext]:hover [data-cta]{background-color:#1A4038 !important;}
+  [data-stepnext]:hover [data-cta] .cta-arrow{transform:translateX(4px);}
+  [data-cta-orange]{transition:background-color .25s ease,transform .15s ease;}
+  [data-cta-orange]:hover{background-color:#D94A00 !important;}
+  [data-cta-orange]:active{transform:scale(.985);}
+  [data-cta-orange]:hover .cta-arrow{transform:translateX(4px);}
+  /* ---- FAQ-Akkordeon ---- */
+  .cpx-acc summary{list-style:none;cursor:pointer;}
+  .cpx-acc summary::-webkit-details-marker{display:none;}
+  .cpx-acc .cpx-acc-x{transition:transform .25s cubic-bezier(.16,.7,.2,1), background .2s ease, color .2s ease;}
+  .cpx-acc details[open] .cpx-acc-x{transform:rotate(45deg);background:#0F2C27;color:#EDF0EF;}
+  .cpx-acc summary:hover .cpx-acc-x{border-color:#0F2C27;}
+  /* ---- Mobile-Header: Burger + Drawer ---- */
+  .cpx-burger{display:none;width:44px;height:44px;align-items:center;justify-content:center;background:transparent;border:1px solid rgba(237,240,239,0.22);border-radius:4px;cursor:pointer;margin-left:auto;flex-shrink:0;padding:0;}
+  .cpx-burger span{display:block;width:18px;height:2px;background:#EDF0EF;border-radius:2px;position:relative;transition:background .2s ease;}
+  .cpx-burger span::before,.cpx-burger span::after{content:'';position:absolute;left:0;width:18px;height:2px;background:#EDF0EF;border-radius:2px;transition:transform .3s cubic-bezier(.16,.7,.2,1);}
+  .cpx-burger span::before{top:-6px;}
+  .cpx-burger span::after{top:6px;}
+  .cpx-burger[aria-expanded="true"] span{background:transparent;}
+  .cpx-burger[aria-expanded="true"] span::before{transform:translateY(6px) rotate(45deg);}
+  .cpx-burger[aria-expanded="true"] span::after{transform:translateY(-6px) rotate(-45deg);}
+  .cpx-burger:focus-visible{outline:2px solid #F15200;outline-offset:2px;}
+  .cpx-drawerlink:focus-visible{outline:2px solid #F15200;outline-offset:2px;}
+  .cpx-header-login:hover{border-color:rgba(237,240,239,0.6) !important;background-color:rgba(237,240,239,0.06);}
+  /* ---- Einheitlicher Fokus-Ring (Tastaturbedienung) ---- */
+  a:focus-visible,
+  button:focus-visible,
+  [role="tab"]:focus-visible,
+  summary:focus-visible{outline:2px solid #F15200;outline-offset:2px;}
+  input:focus-visible:not(.cpx-faq-input){outline:2px solid #F15200 !important;outline-offset:2px;}
+  @media (max-width:1100px){
+    .cpx-desktop-nav{display:none !important;}
+    .cpx-header-cta{display:none !important;}
+    .cpx-header-login{display:none !important;}
+    .cpx-burger{display:flex !important;}
+  }
+  @media (min-width:1101px){
+    .cpx-mobile-drawer,.cpx-mobile-backdrop{display:none !important;}
+  }
+  /* ---- Reduced Motion: Bewegung aus, Inhalt sichtbar ---- */
+  @media (prefers-reduced-motion: reduce){
+    *,*::before,*::after{
+      animation-duration:.001ms !important;
+      animation-iteration-count:1 !important;
+      animation-delay:0ms !important;
+      transition-duration:.001ms !important;
+      transition-delay:0ms !important;
+    }
+    html{scroll-behavior:auto !important;}
+    [data-reveal]{transform:none !important;}
+    [data-once]{opacity:1 !important;}
+  }
+</style>
+</helmet>
+
+<div ref="{{ rootRef }}" style="position:relative;width:100%;background:#ffffff;">
+
+  <!-- ====================== HEADER (Škoda-Stil) ====================== -->
+  <header style="position:fixed;top:0;left:0;right:0;z-index:50;height:60px;background:#0F2C27;border-bottom:1px solid rgba(237,240,239,0.12);display:flex;align-items:center;padding:0 22px;">
+    <a href="#" style="display:flex;align-items:center;gap:9px;height:36px;margin-right:36px;text-decoration:none;flex-shrink:0;">
+      <img src="img/cpx-logo.png" alt="CAIPEX Logo" style="height:30px;width:30px;object-fit:contain;display:block;">
+      <span style="font-family:'Schibsted Grotesk';font-weight:800;font-size:22px;color:#EDF0EF;letter-spacing:-0.01em;">CAIPEX</span>
+    </a>
+    <nav class="cpx-desktop-nav" style="position:absolute;left:50%;top:0;transform:translateX(-50%);height:100%;display:flex;align-items:center;">
+      <ul style="list-style:none;margin:0;padding:0;display:flex;align-items:center;">
+        <li style="padding:0 14px;margin-right:16px;position:relative;">
+          <a data-navlink="" href="#anwendung" style="display:flex;align-items:center;gap:7px;height:60px;position:relative;color:#EDF0EF;text-decoration:none;font-size:15px;font-weight:300;letter-spacing:0.28px;">
+            <span style="position:relative;display:inline-flex;align-items:center;">
+              <span class="nl-norm" style="transition:opacity .15s ease;">Für wen</span>
+              <span class="nl-bold" style="position:absolute;left:0;top:50%;transform:translateY(-50%);font-weight:700;letter-spacing:0.28px;pointer-events:none;white-space:nowrap;transition:opacity .15s ease;">Für wen</span>
+            </span>
+            <div class="nl-ul" style="position:absolute;bottom:-1px;left:0;height:2px;width:100%;background:#F15200;transition:opacity .15s ease;"></div>
+          </a>
+        </li>
+        <li style="padding:0 14px;margin-right:16px;position:relative;">
+          <a data-navlink="" href="#funktion" style="display:flex;align-items:center;gap:7px;height:60px;position:relative;color:#EDF0EF;text-decoration:none;font-size:15px;font-weight:300;letter-spacing:0.28px;">
+            <span style="position:relative;display:inline-flex;align-items:center;">
+              <span class="nl-norm" style="transition:opacity .15s ease;">Ablauf</span>
+              <span class="nl-bold" style="position:absolute;left:0;top:50%;transform:translateY(-50%);font-weight:700;letter-spacing:0.28px;pointer-events:none;white-space:nowrap;transition:opacity .15s ease;">Ablauf</span>
+            </span>
+            <div class="nl-ul" style="position:absolute;bottom:-1px;left:0;height:2px;width:100%;background:#F15200;transition:opacity .15s ease;"></div>
+          </a>
+        </li>
+        <li style="padding:0 14px;margin-right:16px;position:relative;">
+          <a data-navlink="" href="#prognose" style="display:flex;align-items:center;gap:7px;height:60px;position:relative;color:#EDF0EF;text-decoration:none;font-size:15px;font-weight:300;letter-spacing:0.28px;">
+            <span style="position:relative;display:inline-flex;align-items:center;">
+              <span class="nl-norm" style="transition:opacity .15s ease;">Live</span>
+              <span class="nl-bold" style="position:absolute;left:0;top:50%;transform:translateY(-50%);font-weight:700;letter-spacing:0.28px;pointer-events:none;white-space:nowrap;transition:opacity .15s ease;">Live</span>
+            </span>
+            <div class="nl-ul" style="position:absolute;bottom:-1px;left:0;height:2px;width:100%;background:#F15200;transition:opacity .15s ease;"></div>
+          </a>
+        </li>
+        <li style="padding:0 14px;margin-right:16px;position:relative;">
+          <a data-navlink="" href="#rollen" style="display:flex;align-items:center;gap:7px;height:60px;position:relative;color:#EDF0EF;text-decoration:none;font-size:15px;font-weight:300;letter-spacing:0.28px;">
+            <span style="position:relative;display:inline-flex;align-items:center;">
+              <span class="nl-norm" style="transition:opacity .15s ease;">Rollenwechsel</span>
+              <span class="nl-bold" style="position:absolute;left:0;top:50%;transform:translateY(-50%);font-weight:700;letter-spacing:0.28px;pointer-events:none;white-space:nowrap;transition:opacity .15s ease;">Rollenwechsel</span>
+            </span>
+            <div class="nl-ul" style="position:absolute;bottom:-1px;left:0;height:2px;width:100%;background:#F15200;transition:opacity .15s ease;"></div>
+          </a>
+        </li>
+        <li style="padding:0 14px;margin-right:16px;position:relative;">
+          <a data-navlink="" href="#preise" style="display:flex;align-items:center;gap:7px;height:60px;position:relative;color:#EDF0EF;text-decoration:none;font-size:15px;font-weight:300;letter-spacing:0.28px;">
+            <span style="position:relative;display:inline-flex;align-items:center;">
+              <span class="nl-norm" style="transition:opacity .15s ease;">Preise</span>
+              <span class="nl-bold" style="position:absolute;left:0;top:50%;transform:translateY(-50%);font-weight:700;letter-spacing:0.28px;pointer-events:none;white-space:nowrap;transition:opacity .15s ease;">Preise</span>
+            </span>
+            <div class="nl-ul" style="position:absolute;bottom:-1px;left:0;height:2px;width:100%;background:#F15200;transition:opacity .15s ease;"></div>
+          </a>
+        </li>
+        <li style="padding:0 14px;margin-right:16px;position:relative;">
+          <a data-navlink="" href="#team" style="display:flex;align-items:center;gap:7px;height:60px;position:relative;color:#EDF0EF;text-decoration:none;font-size:15px;font-weight:300;letter-spacing:0.28px;">
+            <span style="position:relative;display:inline-flex;align-items:center;">
+              <span class="nl-norm" style="transition:opacity .15s ease;">Über uns</span>
+              <span class="nl-bold" style="position:absolute;left:0;top:50%;transform:translateY(-50%);font-weight:700;letter-spacing:0.28px;pointer-events:none;white-space:nowrap;transition:opacity .15s ease;">Über uns</span>
+            </span>
+            <div class="nl-ul" style="position:absolute;bottom:-1px;left:0;height:2px;width:100%;background:#F15200;transition:opacity .15s ease;"></div>
+          </a>
+        </li>
+        <li style="padding:0 7px;position:relative;">
+          <a data-navlink="" href="#faq" style="display:flex;align-items:center;gap:7px;height:60px;position:relative;color:#EDF0EF;text-decoration:none;font-size:15px;font-weight:300;letter-spacing:0.28px;">
+            <span style="position:relative;display:inline-flex;align-items:center;">
+              <span class="nl-norm" style="transition:opacity .15s ease;">FAQ</span>
+              <span class="nl-bold" style="position:absolute;left:0;top:50%;transform:translateY(-50%);font-weight:700;letter-spacing:0.28px;pointer-events:none;white-space:nowrap;transition:opacity .15s ease;">FAQ</span>
+            </span>
+            <div class="nl-ul" style="position:absolute;bottom:-1px;left:0;height:2px;width:100%;background:#F15200;transition:opacity .15s ease;"></div>
+          </a>
+        </li>
+      </ul>
+    </nav>
+    <a href="https://app.caipex.de/login" target="_blank" rel="noopener" class="cpx-header-login" style="margin-left:auto;display:inline-flex;align-items:center;gap:8px;color:#EDF0EF;text-decoration:none;font-family:'Schibsted Grotesk';font-size:14px;font-weight:600;letter-spacing:0.01em;padding:8px 18px;border:1px solid rgba(237,240,239,0.28);border-radius:4px;flex-shrink:0;transition:border-color .2s ease,background-color .2s ease;"><svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex:none;"><path d="M6.5 2.5H12.5V13.5H6.5M9 8H2.5M2.5 8L5 5.5M2.5 8L5 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>zur App</a>
+    <button type="button" class="cpx-burger" aria-label="Menü öffnen" aria-expanded="{{ mobileExpanded }}" onClick="{{ toggleMobile }}"><span></span></button>
+  </header>
+
+  <!-- Mobile-Navigation: Backdrop + Drawer -->
+  <div class="cpx-mobile-backdrop" style="{{ mobileBackdropStyle }}" onClick="{{ closeMobile }}"></div>
+  <nav class="cpx-mobile-drawer" aria-label="Hauptnavigation (mobil)" style="{{ mobileDrawerStyle }}">
+    <a class="cpx-drawerlink" href="#anwendung" onClick="{{ closeMobile }}" style="display:flex;align-items:baseline;gap:12px;padding:14px 4px;border-bottom:1px solid rgba(237,240,239,0.1);color:#EDF0EF;text-decoration:none;"><span style="font-family:'Schibsted Grotesk';font-weight:600;font-size:12px;color:#7E948D;">01</span><span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:1.15rem;">Für wen</span></a>
+    <a class="cpx-drawerlink" href="#funktion" onClick="{{ closeMobile }}" style="display:flex;align-items:baseline;gap:12px;padding:14px 4px;border-bottom:1px solid rgba(237,240,239,0.1);color:#EDF0EF;text-decoration:none;"><span style="font-family:'Schibsted Grotesk';font-weight:600;font-size:12px;color:#7E948D;">02</span><span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:1.15rem;">Ablauf</span></a>
+    <a class="cpx-drawerlink" href="#prognose" onClick="{{ closeMobile }}" style="display:flex;align-items:baseline;gap:12px;padding:14px 4px;border-bottom:1px solid rgba(237,240,239,0.1);color:#EDF0EF;text-decoration:none;"><span style="font-family:'Schibsted Grotesk';font-weight:600;font-size:12px;color:#7E948D;">03</span><span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:1.15rem;">Live</span></a>
+    <a class="cpx-drawerlink" href="#rollen" onClick="{{ closeMobile }}" style="display:flex;align-items:baseline;gap:12px;padding:14px 4px;border-bottom:1px solid rgba(237,240,239,0.1);color:#EDF0EF;text-decoration:none;"><span style="font-family:'Schibsted Grotesk';font-weight:600;font-size:12px;color:#7E948D;">04</span><span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:1.15rem;">Rollenwechsel</span></a>
+    <a class="cpx-drawerlink" href="#preise" onClick="{{ closeMobile }}" style="display:flex;align-items:baseline;gap:12px;padding:14px 4px;border-bottom:1px solid rgba(237,240,239,0.1);color:#EDF0EF;text-decoration:none;"><span style="font-family:'Schibsted Grotesk';font-weight:600;font-size:12px;color:#7E948D;">05</span><span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:1.15rem;">Preise</span></a>
+    <a class="cpx-drawerlink" href="#team" onClick="{{ closeMobile }}" style="display:flex;align-items:baseline;gap:12px;padding:14px 4px;border-bottom:1px solid rgba(237,240,239,0.1);color:#EDF0EF;text-decoration:none;"><span style="font-family:'Schibsted Grotesk';font-weight:600;font-size:12px;color:#7E948D;">06</span><span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:1.15rem;">Über uns</span></a>
+    <a class="cpx-drawerlink" href="#faq" onClick="{{ closeMobile }}" style="display:flex;align-items:baseline;gap:12px;padding:14px 4px;border-bottom:1px solid rgba(237,240,239,0.1);color:#EDF0EF;text-decoration:none;"><span style="font-family:'Schibsted Grotesk';font-weight:600;font-size:12px;color:#7E948D;">07</span><span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:1.15rem;">FAQ</span></a>
+    <a class="cpx-drawerlink" href="https://app.caipex.de/login" target="_blank" rel="noopener" onClick="{{ closeMobile }}" style="margin-top:18px;display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid rgba(237,240,239,0.3);color:#EDF0EF;text-decoration:none;font-family:'Schibsted Grotesk';font-size:1rem;font-weight:700;padding:14px 20px;border-radius:4px;"><svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex:none;"><path d="M6.5 2.5H12.5V13.5H6.5M9 8H2.5M2.5 8L5 5.5M2.5 8L5 10.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"></path></svg>zur App</a>
+  </nav>
+
+  <!-- ====================== HERO ====================== -->
+  <section style="position:relative;min-height:100vh;display:flex;align-items:center;padding:90px 32px 40px;overflow:hidden;">
+
+
+    <div style="position:relative;max-width:1240px;margin:0 auto;width:100%;display:flex;flex-wrap:wrap;align-items:center;gap:48px;">
+      <!-- left text -->
+      <div style="flex:1.25 1 480px;min-width:320px;">
+        
+        <div data-reveal="" style="display:flex;align-items:center;gap:14px;margin-bottom:20px;">
+          <span style="width:26px;height:2px;background:#F15200;flex:none;border-radius:2px;"></span><span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:0.8rem;letter-spacing:0.22em;text-transform:uppercase;color:#0F2C27;">Technische Bestandsanalyse per App</span>
+        </div>
+        <h1 data-reveal="" style="font-family:'Schibsted Grotesk';font-weight:800;font-size:clamp(2.6rem,4.8vw,4.4rem);line-height:1.04;letter-spacing:-0.03em;margin:0;color:#0F2C27;">Fotografieren Sie<br>Ihr Gebäude.<br><span style="color:#F15200;">CAIPEX</span> macht den Rest.</h1><p data-reveal="" style="font-size:clamp(1.15rem,1.6vw,1.35rem);font-weight:400;line-height:1.5;color:#3D4744;max-width:520px;margin:24px 0 0;text-wrap:pretty;">Aus Fotos und Bestandsunterlagen erstellt CAIPEX Ihren technischen Zustandsbericht — jedes Bauteil bewertet, jede Maßnahme mit Jahr und Kosten geplant.</p>
+        <div data-reveal="" style="display:flex;flex-wrap:wrap;gap:14px;margin-top:34px;">
+          
+          <a href="#download" style="display:inline-flex;align-items:center;gap:10px;background:#F15200;color:#0F2C27;text-decoration:none;font-weight:700;font-size:1rem;padding:15px 26px;border-radius:4px;">Kostenlos testen <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex:none;"><path d="M2.5 8H13M9.5 4L13.5 8L9.5 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg></a><a href="#funktion" style="display:inline-flex;align-items:center;gap:10px;background:transparent;color:#0F2C27;text-decoration:none;font-weight:700;font-size:1rem;padding:15px 24px;border-radius:4px;border:1px solid rgba(15,44,39,0.2);">So funktioniert's</a>
+        </div>
+        
+        
+      </div>
+
+      <!-- right visual: viewfinder + twin -->
+      <div data-twin="" class="cpx-hero-visual" style="flex:0 1 440px;min-width:360px;position:relative;height:560px;">
+        <!-- viewfinder -->
+        <div class="cpx-hv-vf" style="position:absolute;top:0;left:0;width:258px;height:332px;border-radius:8px;overflow:hidden;background:#0F2C27;box-shadow:0 6px 20px -10px rgba(15,44,39,0.20);z-index:2;">
+          <img src="img/hh-dach.jpg" alt="Flachdach" style="{{ heroImg0Style }}">
+          <img src="img/gem-fassade.jpg" alt="Außenfassade" style="{{ heroImg1Style }}">
+          <img src="img/hh-heizung.jpg" alt="Heizanlage" style="{{ heroImg2Style }}">
+          <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,44,39,0.45),transparent 30%,transparent 70%,rgba(15,44,39,0.55));"></div>
+          <!-- corner brackets -->
+          <div style="position:absolute;top:18px;left:18px;width:26px;height:26px;border-top:2px solid #EDF0EF;border-left:2px solid #EDF0EF;border-radius:2px 0 0 0;"></div>
+          <div style="position:absolute;top:18px;right:18px;width:26px;height:26px;border-top:2px solid #EDF0EF;border-right:2px solid #EDF0EF;border-radius:0 2px 0 0;"></div>
+          <div style="position:absolute;bottom:18px;left:18px;width:26px;height:26px;border-bottom:2px solid #EDF0EF;border-left:2px solid #EDF0EF;border-radius:0 0 0 2px;"></div>
+          <div style="position:absolute;bottom:18px;right:18px;width:26px;height:26px;border-bottom:2px solid #EDF0EF;border-right:2px solid #EDF0EF;border-radius:0 0 2px 0;"></div>
+          <!-- scan line -->
+          <div data-once="scan" style="position:absolute;left:0;right:0;height:2px;background:linear-gradient(90deg,transparent,#F15200,transparent);box-shadow:none;"></div>
+          <!-- HUD -->
+          
+          <div style="position:absolute;bottom:10px;left:0;right:0;display:flex;justify-content:center;gap:6px;"><div style="{{ heroDot0Style }}"></div><div style="{{ heroDot1Style }}"></div><div style="{{ heroDot2Style }}"></div></div>
+          <!-- dynamic annotation tag -->
+          <div style="{{ heroTagWrapStyle }}">{{ heroTagBauteil }} <span style="{{ heroTagBefundStyle }}">{{ heroTagBefund }}</span></div>
+        </div>
+
+        <!-- digital twin: living building model -->
+        <div class="cpx-hv-twin" style="position:absolute;bottom:0;right:0;width:322px;height:452px;border-radius:8px;overflow:hidden;box-shadow:0 6px 20px -10px rgba(15,44,39,0.20);display:flex;flex-direction:column;background:#0F2C27;z-index:1;">
+          <div style="position:relative;flex:1;overflow:hidden;">
+            <img src="img/gem-fassade.jpg" alt="Lebendes Gebäudemodell" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:58% 38%;">
+            <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,44,39,0.62),transparent 30%,transparent 72%,rgba(15,44,39,0.4));"></div>
+            <div style="{{ twinDot0Style }}"></div>
+            <div style="{{ twinDot1Style }}"></div>
+            <div style="{{ twinDot2Style }}"></div>
+          </div>
+          <div style="height:96px;flex-shrink:0;background:#EDF0EF;padding:13px 15px;display:flex;flex-direction:column;justify-content:center;gap:6px;">
+            <div style="display:flex;align-items:center;gap:8px;">
+              <span style="{{ twinYearBadgeStyle }}">{{ twinYear }}</span>
+              <span style="font-family:'Schibsted Grotesk';font-size:0.75rem;font-weight:700;color:#0F2C27;">{{ twinComponent }}</span>
+            </div>
+            <div style="font-size:0.8rem;line-height:1.35;color:#3D4744;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;">{{ twinRecommendation }}</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fakten-Leiste am Hero-Boden -->
+    
+  </section>
+
+
+  <!-- ====================== ANWENDUNGSFÄLLE ====================== -->
+  <section id="anwendung" style="min-height:860px;display:flex;align-items:center;background:#EDF0EF;padding:clamp(64px,7vw,96px) 32px;border-bottom:1px solid rgba(15,44,39,0.08);">
+    <div style="max-width:1240px;margin:0 auto;width:100%;">
+      <div data-reveal="" style="max-width:900px;">
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:24px;">
+          <span style="width:26px;height:2px;background:#F15200;flex:none;border-radius:2px;"></span><span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:0.8rem;letter-spacing:0.24em;text-transform:uppercase;color:#0F2C27;white-space:nowrap;">Für wen</span>
+        </div>
+        <h2 style="font-family:'Schibsted Grotesk';font-weight:700;font-size:clamp(2.2rem,4vw,3.5rem);line-height:1.04;letter-spacing:-0.03em;margin:0;color:#0F2C27;text-wrap:balance;">Verschiedene Gebäude, andere Ziele.<br><span style="color: rgb(241, 82, 0);">Dieselbe Klarheit.</span></h2>
+      </div>
+
+      <div data-reveal="" class="cpx-fw-grid" style="display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:32px 26px;margin-top:clamp(40px,5vw,60px);">
+
+        <article class="cpx-fw-card" aria-label="Kommunen – Schulen und öffentliche Gebäude" style="display:flex;flex-direction:column;">
+          <div style="display:flex;align-items:baseline;gap:10px;">
+            <span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:1.15rem;letter-spacing:-0.01em;color:#0F2C27;">Kommunen</span>
+          </div>
+          <span style="font-family:'Hanken Grotesk';font-size:0.82rem;color:#66706B;margin-top:2px;">z.B. Schulen</span>
+          <div class="cpx-fw-rule" style="height:2px;width:28px;background:#F15200;border-radius:2px;margin-top:14px;"></div>
+          <div class="cpx-fw-imgwrap" style="position:relative;width:100%;aspect-ratio:3/4;border-radius:10px;overflow:hidden;background:#E3E8E6;margin-top:18px;">
+            <img class="cpx-fw-img" src="img/gem-schule.jpg" alt="Schule / kommunales Gebäude" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+          </div>
+          <p style="font-size:0.98rem;line-height:1.5;margin:18px 0 0;text-wrap:pretty;"><b>Wissen, welches Gebäude zuerst dran muss – und was es kostet.</b></p>
+        </article>
+
+        <article class="cpx-fw-card" aria-label="Verwalter – Mehrfamilienhäuser" style="display:flex;flex-direction:column;">
+          <div style="display:flex;align-items:baseline;gap:10px;">
+            <span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:1.15rem;letter-spacing:-0.01em;color:#0F2C27;">Verwalter</span>
+          </div>
+          <span style="font-family:'Hanken Grotesk';font-size:0.82rem;color:#66706B;margin-top:2px;">z.B. Mehrfamilienhäuser</span>
+          <div class="cpx-fw-rule" style="height:2px;width:28px;background:#F15200;border-radius:2px;margin-top:14px;"></div>
+          <div class="cpx-fw-imgwrap" style="position:relative;width:100%;aspect-ratio:3/4;border-radius:10px;overflow:hidden;background:#E3E8E6;margin-top:18px;">
+            <img class="cpx-fw-img" src="img/gem-mfh.jpg" alt="Mehrfamilienhaus, Innenstadtlage" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+          </div>
+          <p style="font-size:0.98rem;line-height:1.5;margin:18px 0 0;text-wrap:pretty;"><span style="color:#0F2C27;font-weight:600;">Dem Eigentümer in fünf Minuten erklären können, was am Gebäude aktuell anliegt.</span> <span style="color:#66706B;">.</span></p>
+        </article>
+
+        <article class="cpx-fw-card" aria-label="Asset Manager – Gewerbeimmobilien" style="display:flex;flex-direction:column;">
+          <div style="display:flex;align-items:baseline;gap:10px;">
+            <span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:1.15rem;letter-spacing:-0.01em;color:#0F2C27;">Asset Manager</span>
+          </div>
+          <span style="font-family:'Hanken Grotesk';font-size:0.82rem;color:#66706B;margin-top:2px;">z.B. Büro &amp; Gewerbe</span>
+          <div class="cpx-fw-rule" style="height:2px;width:28px;background:#F15200;border-radius:2px;margin-top:14px;"></div>
+          <div class="cpx-fw-imgwrap" style="position:relative;width:100%;aspect-ratio:3/4;border-radius:10px;overflow:hidden;background:#E3E8E6;margin-top:18px;">
+            <img class="cpx-fw-img" src="img/gem-buero.jpg" alt="Büro- / Gewerbeimmobilie" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+          </div>
+          <p style="font-size:0.98rem;line-height:1.5;margin:18px 0 0;text-wrap:pretty;"><span style="color: rgb(15, 44, 39); font-weight: 600;">CapEx fürs ganze Portfolio planen, nicht nur fürs Objekt, das gerade "brennt".</span></p>
+        </article>
+
+        <article class="cpx-fw-card" aria-label="Ingenieurbüros – Sachverständige" style="display:flex;flex-direction:column;">
+          <div style="display:flex;align-items:baseline;gap:10px;">
+            <span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:1.15rem;letter-spacing:-0.01em;color:#0F2C27;">Dienstleister</span>
+          </div>
+          <span style="font-family:'Hanken Grotesk';font-size:0.82rem;color:#66706B;margin-top:2px;">z.B. Sachverständige</span>
+          <div class="cpx-fw-rule" style="height:2px;width:28px;background:#F15200;border-radius:2px;margin-top:14px;"></div>
+          <div class="cpx-fw-imgwrap" style="position:relative;width:100%;aspect-ratio:3/4;border-radius:10px;overflow:hidden;background:#E3E8E6;margin-top:18px;">
+            <img class="cpx-fw-img" src="img/gem-gutachter.jpg" alt="Gebäudegutachter am Schreibtisch" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+          </div>
+          <p style="font-size:0.98rem;line-height:1.5;margin:18px 0 0;text-wrap:pretty;"><span style="color: rgb(15, 44, 39); font-weight: 600;">Mehr Objekte bewerten, ohne dass die Qualität an einzelnen Personen hängt.</span></p>
+        </article>
+
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====================== PROGNOSE / MASSNAHMEN ====================== -->
+  
+
+  <!-- PDF Viewer Modal -->
+  <sc-if value="{{ pdfOpen }}" hint-placeholder-val="{{ false }}">
+    <div onClick="{{ closePdfViewer }}" style="position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:100;display:flex;align-items:center;justify-content:center;padding:16px;backdrop-filter:blur(4px);animation:fadeIn .3s ease;">
+      <div onClick="{{ stopEvt }}" style="position:relative;width:100%;max-width:960px;height:90vh;background:#fff;border-radius:8px;overflow:hidden;box-shadow:0 20px 60px rgba(0,0,0,0.3);display:flex;flex-direction:column;">
+        <div style="display:flex;align-items:center;justify-content:space-between;padding:16px 24px;border-bottom:1px solid rgba(15,44,39,0.1);background:#EDF0EF;">
+          <h2 style="margin:0;font-family:'Schibsted Grotesk';font-weight:700;font-size:1.1rem;color:#0F2C27;">CAIPEX Beispielbericht</h2>
+          <button onClick="{{ closePdfViewer }}" aria-label="Schließen" style="background:none;border:none;font-size:1.5rem;cursor:pointer;color:#0F2C27;width:32px;height:32px;display:flex;align-items:center;justify-content:center;">×</button>
+        </div>
+        <div style="flex:1 1 auto;min-height:0;display:flex;flex-direction:column;background:#3a3d42;">
+          <div ref="{{ pdfContainerRef }}" style="flex:1 1 auto;min-height:0;overflow:auto;padding:20px 16px;display:flex;flex-direction:column;align-items:center;gap:14px;"></div>
+          <sc-if value="{{ pdfLoading }}" hint-placeholder-val="{{ true }}">
+            <div style="margin:auto;color:#EDF0EF;font-family:'Schibsted Grotesk';font-size:0.9rem;opacity:0.8;">Bericht wird geladen …</div>
+          </sc-if>
+          <sc-if value="{{ pdfError }}" hint-placeholder-val="{{ false }}">
+            <div style="margin:auto;color:#EDF0EF;font-family:'Schibsted Grotesk';font-size:0.9rem;text-align:center;padding:20px;">Der Bericht konnte nicht geladen werden.</div>
+          </sc-if>
+        </div>
+      </div>
+    </div>
+  </sc-if>
+
+  <section id="funktion" style="position:relative;max-width:1240px;margin:0 auto;padding:clamp(72px,9vw,112px) 32px;">
+    <div data-reveal="" style="max-width:680px;">
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:22px;">
+        <span style="width:26px;height:2px;background:#F15200;flex:none;border-radius:2px;"></span><span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:0.8rem;letter-spacing:0.24em;text-transform:uppercase;color:#0F2C27;white-space:nowrap;">Ablauf</span>
+      </div>
+      <h2 style="font-family:'Schibsted Grotesk';font-weight:700;font-size:clamp(1.9rem,3.4vw,3rem);line-height:1.08;letter-spacing:-0.02em;margin:0;">In vier Schritten<br>zum fertigen Bericht.</h2>
+    </div>
+
+    <div style="display:flex;flex-wrap:wrap;gap:24px;margin-top:48px;">
+      <!-- step 1: Dokumente hochladen -->
+      <div data-reveal="" data-stepcard="" style="flex: 1 1 300px; background: #fff; border: 1px solid rgba(15,44,39,0.16); border-radius: 8px; padding: 30px; min-height: 340px; display: flex; flex-direction: column; overflow: hidden; transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;">
+        <div style="display:flex;align-items:baseline;gap:9px;border-top:2px solid #0F2C27;padding-top:14px;">
+          <span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;color:#0F2C27;">Schritt</span>
+          <span style="font-family:'Schibsted Grotesk';font-weight:800;font-size:1.6rem;line-height:0.85;color:#0F2C27;letter-spacing:-0.02em;">1</span>
+          <span style="font-family:'Schibsted Grotesk';font-weight:600;font-size:0.92rem;color:#66706B;">/ 4</span>
+        </div>
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;margin:18px 0;position:relative;">
+          <div style="position:relative;width:100%;height:160px;border-radius:8px;overflow:hidden;">
+            <img src="fotos/grundriss.jpg" alt="Grundriss aus den Bestandsunterlagen" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:contain;">
+            <div style="position:absolute;left:28px;top:50%;transform:translateY(-50%);width:36px;height:36px;border-radius:50%;background:#0F2C27;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 14px -4px rgba(15,44,39,0.5);z-index:2;">
+              <div style="width:0;height:0;border-left:6px solid transparent;border-right:6px solid transparent;border-bottom:9px solid #fff;margin-bottom:1px;"></div>
+            </div>
+          </div>
+        </div>
+        <h3 style="font-family:'Schibsted Grotesk';font-weight:700;font-size:1.35rem;margin:0 0 8px;">Dokumente hochladen</h3>
+        <p style="font-size:0.92rem;line-height:1.5;color:#66706B;margin:0;">Grundrisse, Energieausweise, alte Gutachten — CAIPEX liest aus, was bereits vorliegt.</p>
+        
+      </div>
+      <!-- step 2: Fotografieren -->
+      <div data-reveal="" data-stepcard="" style="flex: 1 1 300px; background: #fff; border: 1px solid rgba(15,44,39,0.16); border-radius: 8px; padding: 30px; min-height: 340px; display: flex; flex-direction: column; overflow: visible; opacity: 1; transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;">
+        <div style="display:flex;align-items:baseline;gap:9px;border-top:2px solid #0F2C27;padding-top:14px;">
+          <span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;color:#0F2C27;">Schritt</span>
+          <span style="font-family:'Schibsted Grotesk';font-weight:800;font-size:1.6rem;line-height:0.85;color:#0F2C27;letter-spacing:-0.02em;">2</span>
+          <span style="font-family:'Schibsted Grotesk';font-weight:600;font-size:0.92rem;color:#66706B;">/ 4</span>
+        </div>
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;margin:18px 0;">
+          <div style="position:relative;width:140px;height:140px;border-radius:8px;overflow:hidden;box-shadow:0 6px 20px -10px rgba(15,44,39,0.20);">
+            <img src="img/gem-fassade.jpg" alt="Bauteil im Sucher" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:50% 40%;">
+            <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,44,39,0.28),transparent 40%,transparent 70%,rgba(15,44,39,0.3));"></div>
+            <div style="position:absolute;top:12px;left:12px;width:18px;height:18px;border-top:2px solid #EDF0EF;border-left:2px solid #EDF0EF;border-radius:2px 0 0 0;"></div>
+            <div style="position:absolute;top:12px;right:12px;width:18px;height:18px;border-top:2px solid #EDF0EF;border-right:2px solid #EDF0EF;border-radius:0 2px 0 0;"></div>
+            <div style="position:absolute;bottom:12px;left:12px;width:18px;height:18px;border-bottom:2px solid #EDF0EF;border-left:2px solid #EDF0EF;border-radius:0 0 0 2px;"></div>
+            <div style="position:absolute;bottom:12px;right:12px;width:18px;height:18px;border-bottom:2px solid #EDF0EF;border-right:2px solid #EDF0EF;border-radius:0 0 2px 0;"></div>
+          </div>
+        </div>
+        <h3 style="font-family:'Schibsted Grotesk';font-weight:700;font-size:1.35rem;margin:0 0 8px;">Fotografieren</h3>
+        <p style="font-size:0.92rem;line-height:1.5;color:#66706B;margin:0;">Die App führt Sie Bauteil für Bauteil durch das Gebäude — fotografieren genügt.</p>
+        
+      </div>
+      <!-- step 3: CAIPEX analysiert -->
+      <div data-reveal="" data-stepcard="" style="flex: 1 1 300px; background: #fff; border: 1px solid rgba(15,44,39,0.16); border-radius: 8px; padding: 30px; min-height: 340px; display: flex; flex-direction: column; overflow: hidden; transition: border-color .2s ease, box-shadow .2s ease, transform .2s ease;">
+        <div style="display:flex;align-items:baseline;gap:9px;border-top:2px solid #0F2C27;padding-top:14px;">
+          <span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;color:#0F2C27;">Schritt</span>
+          <span style="font-family:'Schibsted Grotesk';font-weight:800;font-size:1.6rem;line-height:0.85;color:#0F2C27;letter-spacing:-0.02em;">3</span>
+          <span style="font-family:'Schibsted Grotesk';font-weight:600;font-size:0.92rem;color:#66706B;">/ 4</span>
+        </div>
+        <div style="flex:1;display:flex;align-items:center;justify-content:center;margin:18px 0;">
+          <div style="width:100%;max-width:250px;display:flex;flex-direction:column;gap:16px;">
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div style="position:relative;width:52px;height:40px;border-radius:4px;overflow:hidden;flex:none;">
+                <img src="img/hh-dach.jpg" alt="" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+                <div data-once="a-scan" style="--d:.2s;position:absolute;left:0;right:0;top:0;height:14px;background:linear-gradient(rgba(241,82,0,0.28),rgba(241,82,0,0));border-top:1.5px solid #F15200;pointer-events:none;"></div>
+              </div>
+              <div style="flex:1;min-width:0;"><div style="font-family:'Schibsted Grotesk';font-weight:700;font-size:0.78rem;color:#0F2C27;">Dach</div><div style="height:2px;margin-top:6px;background:rgba(15,44,39,0.1);border-radius:2px;overflow:hidden;"><div data-once="rvline" style="--d:.55s;height:100%;width:100%;background:#F15200;"></div></div></div>
+              <span data-once="rv" style="--d:1.15s;display:inline-flex;flex:none;"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true" style="flex:none;"><path d="M2.5 7.5L5.5 10.5L11.5 3.5" stroke="#0F2C27" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div style="position:relative;width:52px;height:40px;border-radius:4px;overflow:hidden;flex:none;">
+                <img src="fotos/hh-fassade.jpg" alt="" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+                <div data-once="a-scan" style="--d:.9s;position:absolute;left:0;right:0;top:0;height:14px;background:linear-gradient(rgba(241,82,0,0.28),rgba(241,82,0,0));border-top:1.5px solid #F15200;pointer-events:none;"></div>
+              </div>
+              <div style="flex:1;min-width:0;"><div style="font-family:'Schibsted Grotesk';font-weight:700;font-size:0.78rem;color:#0F2C27;">Fassade</div><div style="height:2px;margin-top:6px;background:rgba(15,44,39,0.1);border-radius:2px;overflow:hidden;"><div data-once="rvline" style="--d:1.25s;height:100%;width:100%;background:#F15200;"></div></div></div>
+              <span data-once="rv" style="--d:1.85s;display:inline-flex;flex:none;"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true" style="flex:none;"><path d="M2.5 7.5L5.5 10.5L11.5 3.5" stroke="#0F2C27" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+            </div>
+            <div style="display:flex;align-items:center;gap:12px;">
+              <div style="position:relative;width:52px;height:40px;border-radius:4px;overflow:hidden;flex:none;">
+                <img src="img/hh-heizung.jpg" alt="" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;">
+                <div data-once="a-scan" style="--d:1.6s;position:absolute;left:0;right:0;top:0;height:14px;background:linear-gradient(rgba(241,82,0,0.28),rgba(241,82,0,0));border-top:1.5px solid #F15200;pointer-events:none;"></div>
+              </div>
+              <div style="flex:1;min-width:0;"><div style="font-family:'Schibsted Grotesk';font-weight:700;font-size:0.78rem;color:#0F2C27;">Heizung</div><div style="height:2px;margin-top:6px;background:rgba(15,44,39,0.1);border-radius:2px;overflow:hidden;"><div data-once="rvline" style="--d:1.95s;height:100%;width:100%;background:#F15200;"></div></div></div>
+              <span data-once="rv" style="--d:2.55s;display:inline-flex;flex:none;"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true" style="flex:none;"><path d="M2.5 7.5L5.5 10.5L11.5 3.5" stroke="#0F2C27" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+            </div>
+          </div>
+        </div>
+        <h3 style="font-family:'Schibsted Grotesk';font-weight:700;font-size:1.35rem;margin:0 0 8px;">CAIPEX analysiert</h3>
+        <p style="font-size:0.92rem;line-height:1.5;color:#66706B;margin:0;">Jedes Bauteil erhält eine Zustandsklasse, jede Maßnahme ein Jahr und einen Preis.</p>
+      </div>
+      <!-- step 4: Status Quo — Zustandsbericht (feature) -->
+      <div data-reveal="" style="flex:1 1 100%;background:#0F2C27;border-radius:8px;overflow:hidden;min-height:340px;display:flex;flex-wrap:wrap;box-shadow:0 30px 60px -28px rgba(15,44,39,0.45);">
+        <!-- left: echter Report-Screenshot -->
+        <div style="flex:1.7 1 460px;background:#EDF0EF;padding:clamp(20px,2.2vw,30px);display:flex;align-items:center;justify-content:center;">
+          <div style="width:100%;max-width:680px;background:#fff;border:1px solid rgba(15,44,39,0.08);border-radius:8px;box-shadow:0 6px 20px -10px rgba(15,44,39,0.20);overflow:hidden;">
+            <img src="img/report-status-quo.jpg" alt="CAIPEX Bauzustandsbericht — Investitionsplanung &amp; CRREM-Pfadanalyse" loading="lazy" style="display:block;width:100%;height:auto;">
+          </div>
+        </div>
+        <!-- right: content -->
+        <div style="flex:1 1 440px;padding:clamp(26px,3vw,38px);display:flex;flex-direction:column;justify-content:center;">
+          <div style="display:flex;align-items:baseline;gap:8px;font-family:'Schibsted Grotesk';margin-bottom:2px;"><span style="font-weight:700;font-size:0.75rem;letter-spacing:0.2em;text-transform:uppercase;color:#BAC6C2;">Schritt</span><span style="font-weight:800;font-size:1.4rem;line-height:0.85;color:#EDF0EF;letter-spacing:-0.02em;">4</span><span style="font-weight:600;font-size:0.86rem;color:#BAC6C2;">/ 4</span></div>
+          <h3 style="font-family:'Schibsted Grotesk';font-weight:700;font-size:clamp(1.4rem,2.2vw,1.9rem);letter-spacing:-0.01em;margin:8px 0 14px;color:#EDF0EF;">Status Quo — der Zustandsbericht.</h3>
+          
+          <div style="font-family:'Schibsted Grotesk';font-size:0.75rem;letter-spacing:0.06em;text-transform:uppercase;color:#BAC6C2;margin-bottom:4px;">INHALTE</div>
+          <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 28px;">
+            <div style="display:flex;align-items:center;gap:9px;padding:9px 0;border-bottom:1px solid rgba(237,240,239,0.14);"><span aria-hidden="true" style="flex:none;width:13px;color:#EDF0EF;font-family:'Schibsted Grotesk';font-weight:700;font-size:0.95rem;line-height:1;">–</span><span style="font-family:'Schibsted Grotesk';font-size:0.85rem;font-weight:600;color:#EDF0EF;">Management Summary</span></div>
+            <div style="display:flex;align-items:center;gap:9px;padding:9px 0;border-bottom:1px solid rgba(237,240,239,0.14);"><span aria-hidden="true" style="flex:none;width:13px;color:#EDF0EF;font-family:'Schibsted Grotesk';font-weight:700;font-size:0.95rem;line-height:1;">–</span><span style="font-family:'Schibsted Grotesk';font-size:0.85rem;font-weight:600;color:#EDF0EF;">Fotodokumentation</span></div>
+            <div style="display:flex;align-items:center;gap:9px;padding:9px 0;border-bottom:1px solid rgba(237,240,239,0.14);"><span aria-hidden="true" style="flex:none;width:13px;color:#EDF0EF;font-family:'Schibsted Grotesk';font-weight:700;font-size:0.95rem;line-height:1;">–</span><span style="font-family:'Schibsted Grotesk';font-size:0.85rem;font-weight:600;color:#EDF0EF;">CRREM-Pfad-Analyse</span></div>
+            <div style="display:flex;align-items:center;gap:9px;padding:9px 0;border-bottom:1px solid rgba(237,240,239,0.14);"><span aria-hidden="true" style="flex:none;width:13px;color:#EDF0EF;font-family:'Schibsted Grotesk';font-weight:700;font-size:0.95rem;line-height:1;">–</span><span style="font-family:'Schibsted Grotesk';font-size:0.85rem;font-weight:600;color:#EDF0EF;">Red-Flags</span></div>
+            <div style="display:flex;align-items:center;gap:9px;padding:9px 0;border-bottom:1px solid rgba(237,240,239,0.14);"><span aria-hidden="true" style="flex:none;width:13px;color:#EDF0EF;font-family:'Schibsted Grotesk';font-weight:700;font-size:0.95rem;line-height:1;">–</span><span style="font-family:'Schibsted Grotesk';font-size:0.85rem;font-weight:600;color:#EDF0EF;">Handlungsempfehlungen kurz- bis langfristig</span></div>
+            <div style="display:flex;align-items:center;gap:9px;padding:9px 0;border-bottom:1px solid rgba(237,240,239,0.14);"><span aria-hidden="true" style="flex:none;width:13px;color:#EDF0EF;font-family:'Schibsted Grotesk';font-weight:700;font-size:0.95rem;line-height:1;">–</span><span style="font-family:'Schibsted Grotesk';font-size:0.85rem;font-weight:600;color:#EDF0EF;">PDF-Export</span></div>
+            <div style="display:flex;align-items:center;gap:9px;padding:9px 0;border-bottom:1px solid rgba(237,240,239,0.14);"><span aria-hidden="true" style="flex:none;width:13px;color:#EDF0EF;font-family:'Schibsted Grotesk';font-weight:700;font-size:0.95rem;line-height:1;">–</span><span style="font-family:'Schibsted Grotesk';font-size:0.85rem;font-weight:600;color:#EDF0EF;">Dashboard</span></div>
+          </div>
+          <button onClick="{{ openPdfViewer }}" data-cta-orange="" style="display:inline-flex;align-items:center;gap:10px;margin-top:24px;align-self:flex-start;font-family:'Schibsted Grotesk';font-weight:700;font-size:0.92rem;color:#0F2C27;background:#F15200;border:none;cursor:pointer;padding:13px 22px;border-radius:4px;">Beispielbericht ansehen <span class="cta-arrow" aria-hidden="true" style="display:inline-flex;"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex:none;"><path d="M2.5 8H13M9.5 4L13.5 8L9.5 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></button>
+        </div>
+      </div>
+      <!-- Übergang zur Prognose: Kapitel-Wechsel statt Kachel -->
+      <a href="#prognose" data-reveal="" data-stepnext="" style="flex:1 1 100%;margin-top:clamp(20px,3vw,36px);padding-top:clamp(28px,3.4vw,40px);border-top:1px solid rgba(15,44,39,0.16);display:flex;flex-wrap:wrap;align-items:flex-end;justify-content:space-between;gap:clamp(20px,3vw,48px);text-decoration:none;">
+        <div style="flex:1 1 auto;min-width:280px;max-width:820px;">
+          
+          <span style="display:block;font-family:'Schibsted Grotesk';font-weight:700;font-size:clamp(1.5rem,2.8vw,2.3rem);line-height:1.14;letter-spacing:-0.02em;color:#0F2C27;text-wrap:balance;">Der Bericht ist der Status Quo. Anschließend kommt&nbsp;<span style="color: rgb(241, 82, 0);">CAIPEX LIVE.</span></span>
+        </div>
+        <span data-cta="" style="flex:none;display:inline-flex;align-items:center;gap:10px;background:#0F2C27;color:#EDF0EF;font-family:'Schibsted Grotesk';font-weight:700;font-size:0.92rem;white-space:nowrap;padding:13px 22px;border-radius:4px;margin-bottom:4px;">Weiter <span class="cta-arrow" aria-hidden="true" style="color:#F15200;display:inline-flex;"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex:none;"><path d="M2.5 8H13M9.5 4L13.5 8L9.5 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></span>
+      </a>
+    </div>
+  </section><section id="prognose" style="position:relative;min-height:860px;display:flex;align-items:center;padding:clamp(72px,9vw,112px) 32px;overflow:hidden;background:#EDF0EF;">
+    <div style="position:absolute;inset:0;pointer-events:none;">
+      <div style="position:absolute;top:15%;left:-160px;width:480px;height:480px;border-radius:50%;background:radial-gradient(circle,rgba(15,44,39,0.04),transparent);"></div>
+    </div>
+
+    <div style="position:relative;max-width:1240px;margin:0 auto;width:100%;display:flex;flex-wrap:wrap;gap:48px;align-items:stretch;">
+
+      <!-- LEFT: Header + Building Model -->
+      <div style="flex:1 1 380px;min-width:0;display:flex;flex-direction:column;">
+        <div data-reveal="" style="margin-bottom:14px;">
+          <div style="display:flex;align-items:center;gap:16px;margin-bottom:18px;">
+            <span style="width:26px;height:2px;background:#F15200;flex:none;border-radius:2px;"></span><span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:0.8rem;letter-spacing:0.24em;text-transform:uppercase;color:#0F2C27;white-space:nowrap;">CAIPEX Live</span>
+          </div>
+          <h2 style="font-family:'Schibsted Grotesk';font-weight:700;font-size:clamp(1.9rem,3.4vw,3rem);line-height:1.08;letter-spacing:-0.02em;margin:0;">Heute wissen,<br>was 2031 fällig wird.</h2>
+        </div>
+
+        <!-- BUILDING MODEL: Real image with overlays -->
+        <div data-reveal="" style="position:relative;width:100%;height:600px;margin-top:0;margin-bottom:0;border-radius:8px;overflow:hidden;box-shadow:0 6px 20px -10px rgba(15,44,39,0.20);">
+          <img src="img/gem-fassade.jpg" alt="Gebäudemodell Lindenallee 7" loading="lazy" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:54% 22%;">
+          <div style="position:absolute;inset:0;background:linear-gradient(180deg,rgba(15,44,39,0.18),transparent 35%,transparent 65%,rgba(15,44,39,0.12));"></div>
+          
+          <!-- Punkt ①: Feuerlöscher — Eingang/EG -->
+          <div style="{{ pDot1Style }}" onMouseEnter="{{ mRow1Enter }}" onMouseLeave="{{ mRowLeave }}">
+            <span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:0.8rem;color:#EDF0EF;">①</span>
+          </div>
+          <div style="{{ pLbl1Style }}">Feuerlöscher · 2026</div>
+          
+          <!-- Punkt ②: Dach — Dachkante Turm -->
+          <div style="{{ pDot2Style }}" onMouseEnter="{{ mRow2Enter }}" onMouseLeave="{{ mRowLeave }}">
+            
+          <span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:0.8rem;color:#EDF0EF;">②</span></div>
+          <div style="{{ pLbl2Style }}">Dach · 2027</div>
+          
+          <!-- Punkt ③: Heizanlage — Technik/EG -->
+          <div style="{{ pDot3Style }}" onMouseEnter="{{ mRow3Enter }}" onMouseLeave="{{ mRowLeave }}">
+            <span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:0.8rem;color:#EDF0EF;">③</span>
+          </div>
+          <div style="{{ pLbl3Style }}">Heizanlage · 2031</div>
+
+          <!-- Punkt ④: Lüftungsanlage — Technikraum -->
+          <div style="{{ pDot4Style }}" onMouseEnter="{{ mRow4Enter }}" onMouseLeave="{{ mRowLeave }}">
+            <span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:0.8rem;color:#EDF0EF;">④</span>
+          </div>
+          <div style="{{ pLbl4Style }}">Lüftungsanlage · 2033</div>
+
+          <!-- legend inset -->
+          
+        </div>
+      </div>
+
+      <!-- RIGHT: Tabs (CAPEX Plan / Chat) über gleich großem Panel -->
+      <div style="flex:1 1 420px;min-width:0;display:flex;flex-direction:column;justify-content:flex-end;">
+
+        <div data-reveal="" style="display:flex;gap:10px;margin-bottom:14px;">
+          <button type="button" onClick="{{ setTabPlan }}" style="{{ tabPlanStyle }}">CAPEX Plan</button>
+          <button type="button" onClick="{{ setTabChat }}" style="{{ tabChatStyle }}">Chat</button>
+        </div>
+
+        <div style="position:relative;height:600px;">
+
+        <!-- DASHBOARD: Kompakt, oben Adresse + Status quo + Gesamtzustand, darunter Maßnahmen -->
+        <sc-if value="{{ isTabPlan }}" hint-placeholder-val="{{ true }}">
+        <div data-reveal="" style="position:absolute;inset:0;background:#fff;border:1px solid rgba(15,44,39,0.08);border-radius:8px;padding:22px;display:flex;flex-direction:column;">
+          
+          <!-- Header: 3-spaltig, kompakt -->
+          <div style="display:grid;grid-template-columns:1fr auto auto;gap:20px;align-items:start;margin-bottom:22px;padding-bottom:18px;border-bottom:1px solid rgba(15,44,39,0.08);">
+            <!-- Adresse -->
+            <div>
+              <div style="font-family:'Schibsted Grotesk';font-weight:700;font-size:1.05rem;color:#0F2C27;">Lindenallee 7</div>
+              <div style="font-family:'Schibsted Grotesk';font-size:0.75rem;color:#66706B;margin-top:3px;">Hamburg</div>
+            </div>
+            <!-- Status quo -->
+            <div style="text-align:center;">
+              <div style="font-family:'Schibsted Grotesk';font-size:0.75rem;letter-spacing:0.05em;color:#66706B;margin-bottom:4px;">JAHR</div>
+              <div style="font-family:'Schibsted Grotesk';font-weight:700;font-size:1rem;color:#0F2C27;">2026</div>
+            </div>
+            <!-- Gesamtzustand -->
+            <div style="text-align:right;">
+              <div style="font-family:'Schibsted Grotesk';font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:#66706B;margin-bottom:4px;">Gesamtzustand</div>
+              <div style="display:flex;align-items:center;gap:10px;justify-content:flex-end;">
+                <div style="font-family:'Schibsted Grotesk';font-weight:700;font-size:1.4rem;color:#0F2C27;line-height:1;">4/5</div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Maßnahmen-Tabelle -->
+          <div style="flex:1;overflow-y:auto;display:flex;flex-direction:column;">
+            <div style="font-family:'Schibsted Grotesk';font-size:0.75rem;letter-spacing:0.08em;text-transform:uppercase;color:#66706B;margin-bottom:12px;">Maßnahmen</div>
+            
+            <!-- Tabellen-Header -->
+            <div style="display:grid;grid-template-columns:50px 1fr 1fr;gap:12px;padding-bottom:10px;margin-bottom:10px;border-bottom:2px solid rgba(15,44,39,0.12);font-family:'Schibsted Grotesk';font-size:0.75rem;letter-spacing:0.05em;text-transform:uppercase;color:#66706B;font-weight:700;">
+              <div>Jahr</div>
+              <div>Gewerk · Beschreibung</div>
+              <div style="text-align:right;">Kosten</div>
+            </div>
+
+            <!-- Zeile 1: 2026 Feuerlöscher — ① -->
+            <div onMouseEnter="{{ mRow1Enter }}" onMouseLeave="{{ mRowLeave }}" style="{{ row1Style }}">
+              <div style="font-family:'Schibsted Grotesk';font-weight:700;font-size:0.82rem;color:#0F2C27;padding-top:2px;">2026</div>
+              <div>
+                <div style="display:flex;align-items:center;gap:7px;margin-bottom:3px;">
+                  <span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#960018;color:#EDF0EF;font-family:'Schibsted Grotesk';font-weight:700;font-size:0.75rem;flex-shrink:0;">①</span>
+                  <span style="font-weight:700;font-size:0.82rem;color:#0F2C27;">Feuerlöscher</span>
+                 
+                </div>
+                <div style="font-size:0.75rem;color:#3D4744;">2-jährliche Wartung fällig</div>
+              </div>
+              <div style="text-align:right;font-family:'Schibsted Grotesk';font-weight:700;font-size:0.8rem;color:#0F2C27;white-space:nowrap;">≈ 480 €</div>
+            </div>
+
+            <!-- Zeile 2: 2027 Dach — ② -->
+            <div onMouseEnter="{{ mRow2Enter }}" onMouseLeave="{{ mRowLeave }}" style="{{ row2Style }}">
+              <div style="font-family:'Schibsted Grotesk';font-weight:700;font-size:0.82rem;color:#0F2C27;padding-top:2px;">2027</div>
+              <div>
+                <div style="display:flex;align-items:center;gap:7px;margin-bottom:3px;">
+                  <span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#8b8680;color:#EDF0EF;font-family:'Schibsted Grotesk';font-weight:700;font-size:0.75rem;flex-shrink:0;">②</span>
+                  <span style="font-weight:700;font-size:0.82rem;color:#0F2C27;">Dachabdichtung</span>
+                </div>
+                <div style="font-size:0.75rem;color:#3D4744;">Nähte punktuell neu verschweißen, Wasserdichtheit sichern</div>
+              </div>
+              <div style="text-align:right;font-family:'Schibsted Grotesk';font-weight:700;font-size:0.8rem;color:#0F2C27;white-space:nowrap;">≈ 12.800 €</div>
+            </div>
+
+            <!-- Zeile 3: 2031 Heizung — ③ -->
+            <div onMouseEnter="{{ mRow3Enter }}" onMouseLeave="{{ mRowLeave }}" style="{{ row3Style }}">
+              <div style="font-family:'Schibsted Grotesk';font-weight:700;font-size:0.82rem;color:#0F2C27;padding-top:2px;">2031</div>
+              <div>
+                <div style="display:flex;align-items:center;gap:7px;margin-bottom:3px;">
+                  <span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#8b8680;color:#EDF0EF;font-family:'Schibsted Grotesk';font-weight:700;font-size:0.75rem;flex-shrink:0;">③</span>
+                  <span style="font-weight:700;font-size:0.82rem;color:#0F2C27;">Heizanlage</span>
+                </div>
+                <div style="font-size:0.75rem;color:#3D4744;">Brenner austauschen, hydraulischen Abgleich durchführen</div>
+              </div>
+              <div style="text-align:right;font-family:'Schibsted Grotesk';font-weight:700;font-size:0.8rem;color:#0F2C27;white-space:nowrap;">≈ 28.500 €</div>
+            </div>
+
+            <!-- Zeile 4: 2033 Lüftung — ④ -->
+            <div onMouseEnter="{{ mRow4Enter }}" onMouseLeave="{{ mRowLeave }}" style="{{ row4Style }}">
+              <div style="font-family:'Schibsted Grotesk';font-weight:700;font-size:0.82rem;color:#0F2C27;padding-top:2px;">2033</div>
+              <div>
+                <div style="display:flex;align-items:center;gap:7px;margin-bottom:3px;">
+                  <span style="display:inline-flex;align-items:center;justify-content:center;width:20px;height:20px;border-radius:50%;background:#8b8680;color:#EDF0EF;font-family:'Schibsted Grotesk';font-weight:700;font-size:0.75rem;flex-shrink:0;">④</span>
+                  <span style="font-weight:700;font-size:0.82rem;color:#0F2C27;">Lüftungsanlage</span>
+                </div>
+                <div style="font-size:0.75rem;color:#3D4744;">Luftfilter wechseln, Funktionsprüfung der Anlage</div>
+              </div>
+              <div style="text-align:right;font-family:'Schibsted Grotesk';font-weight:700;font-size:0.8rem;color:#0F2C27;white-space:nowrap;">≈ 950 €</div>
+            </div>
+
+          </div>
+
+          <!-- Summe + Zeitstrahl -->
+          <div style="margin-top:auto;">
+            <div style="display:flex;align-items:baseline;justify-content:space-between;gap:12px;padding:14px 0 0;margin-top:2px;border-top:2px solid rgba(15,44,39,0.12);">
+              <div style="font-family:'Schibsted Grotesk';font-size:0.75rem;font-weight:700;letter-spacing:0.06em;text-transform:uppercase;color:#66706B;">Investitionsbedarf bis 2033</div>
+              <div style="font-family:'Schibsted Grotesk';font-weight:800;font-size:1.05rem;color:#0F2C27;white-space:nowrap;">≈ 42.730 €</div>
+            </div>
+            <div style="position:relative;height:64px;margin-top:12px;">
+              <div style="position:absolute;left:0;right:0;top:5px;height:2px;background:rgba(15,44,39,0.12);border-radius:2px;"></div>
+              <div style="position:absolute;left:2%;top:0;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;" onMouseEnter="{{ mRow1Enter }}" onMouseLeave="{{ mRowLeave }}">
+                <span style="width:12px;height:12px;border-radius:50%;background:#960018;border:2px solid #fff;box-shadow:0 0 0 1px rgba(15,44,39,0.15);"></span>
+                <span style="font-family:'Schibsted Grotesk';font-size:0.75rem;font-weight:700;color:#0F2C27;">2026</span>
+                <span style="font-family:'Schibsted Grotesk';font-size:0.75rem;font-weight:600;color:#66706B;">0,5 T€</span>
+              </div>
+              <div style="position:absolute;left:22%;top:0;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;" onMouseEnter="{{ mRow2Enter }}" onMouseLeave="{{ mRowLeave }}">
+                <span style="width:12px;height:12px;border-radius:50%;background:#0F2C27;border:2px solid #fff;box-shadow:0 0 0 1px rgba(15,44,39,0.15);"></span>
+                <span style="font-family:'Schibsted Grotesk';font-size:0.75rem;font-weight:700;color:#0F2C27;">2027</span>
+                <span style="font-family:'Schibsted Grotesk';font-size:0.75rem;font-weight:600;color:#66706B;">12,8 T€</span>
+              </div>
+              <div style="position:absolute;left:80%;top:0;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:6px;" onMouseEnter="{{ mRow3Enter }}" onMouseLeave="{{ mRowLeave }}">
+                <span style="width:12px;height:12px;border-radius:50%;background:#0F2C27;border:2px solid #fff;box-shadow:0 0 0 1px rgba(15,44,39,0.15);"></span>
+                <span style="font-family:'Schibsted Grotesk';font-size:0.75rem;font-weight:700;color:#0F2C27;">2031</span>
+                <span style="font-family: 'Schibsted Grotesk'; font-size: 0.75rem; font-weight: 600; color: #66706B;">28,5 T€</span>
+              </div>
+              <div style="position:absolute;left:100%;top:0;transform:translateX(-100%);display:flex;flex-direction:column;align-items:center;gap:6px;" onMouseEnter="{{ mRow4Enter }}" onMouseLeave="{{ mRowLeave }}">
+                <span style="width:10px;height:10px;border-radius:50%;background:#66706B;border:2px solid #fff;box-shadow:0 0 0 1px rgba(15,44,39,0.15);"></span>
+                <span style="font-family:'Schibsted Grotesk';font-size:0.75rem;font-weight:700;color:#0F2C27;">2033</span>
+                <span style="font-family: 'Schibsted Grotesk'; font-size: 0.75rem; font-weight: 600; color: #66706B; white-space: nowrap;">0,95 T€</span>
+              </div>
+            </div>
+          </div>
+
+        </div>
+        </sc-if>
+
+        <!-- CHAT: gleiche Größe wie CAPEX Plan / Gebäudebild -->
+        <sc-if value="{{ isTabChat }}" hint-placeholder-val="{{ false }}">
+        <div data-chat="" data-reveal="" style="position:absolute;inset:0;background:#fff;border:1px solid rgba(15,44,39,0.08);border-radius:8px;padding:22px;display:flex;flex-direction:column;overflow:hidden;">
+          <!-- chat messages -->
+          <div ref="{{ chatScrollRef }}" style="flex:1;overflow-y:auto;display:flex;flex-direction:column;gap:14px;margin-bottom:16px;padding-top:6px;">
+            <sc-for list="{{ chatMessages }}" as="msg" hint-placeholder-count="2">
+              <div style="{{ msg.rowStyle }}">
+                <div style="{{ msg.bubbleStyle }}">
+                  <div style="font-family:'Schibsted Grotesk';font-size:0.75rem;color:rgba(15,44,39,0.65);margin-bottom:4px;font-weight:700;">{{ msg.labelText }}</div>
+                  <div style="font-size:0.94rem;line-height:1.5;">{{ msg.text }}</div>
+                </div>
+              </div>
+            </sc-for>
+            <sc-if value="{{ chatTyping }}" hint-placeholder-val="{{ true }}">
+              <div style="display:flex;gap:4px;align-items:center;">
+                <div style="width:8px;height:8px;background:#66706B;border-radius:50%;animation:dots 1.4s infinite;"></div>
+                <div style="width:8px;height:8px;background:#66706B;border-radius:50%;animation:dots 1.4s infinite .2s;"></div>
+                <div style="width:8px;height:8px;background:#66706B;border-radius:50%;animation:dots 1.4s infinite .4s;"></div>
+              </div>
+            </sc-if>
+          </div>
+          <!-- chat: Demo-Hinweis statt Eingabe -->
+          <div style="display:flex;gap:10px;align-items:center;background:rgba(15,44,39,0.04);border:1px solid rgba(15,44,39,0.08);border-radius:8px;padding:12px 16px;">
+            <svg width="15" height="15" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex:none;"><path d="M2.5 3.5h11v7h-6l-3 2.5v-2.5h-2z" stroke="#66706B" stroke-width="1.3" stroke-linejoin="round"></path></svg>
+            <span style="font-size:0.88rem;line-height:1.4;color:#66706B;font-family:'Hanken Grotesk';">Interaktiver Chat mit dem Gebäudemodell — verfügbar in der CAIPEX-App.</span>
+          </div>
+        </div>
+        </sc-if>
+
+        </div>
+
+      </div>
+
+      <!-- Cross-Link: Preis für CAIPEX Live (leichte Textzeile statt Kachel) -->
+      <div data-reveal="" style="max-width:1240px;margin:28px auto 0;padding-top:20px;border-top:1px solid rgba(15,44,39,0.14);">
+        <a href="#live" style="display:flex;flex-wrap:wrap;align-items:baseline;justify-content:space-between;gap:14px;text-decoration:none;">
+          <span style="font-size:0.95rem;color:#3D4744;">&nbsp;<strong style="color: rgb(15, 44, 39);">ab 19 €/Monat pro Gebäude</strong>.</span>
+          <span style="display:inline-flex;align-items:center;gap:8px;font-family:'Schibsted Grotesk';font-weight:700;font-size:0.9rem;color:#0F2C27;border-bottom:2px solid #F15200;padding-bottom:2px;white-space:nowrap;">Live-Preis ansehen <span aria-hidden="true" style="display:inline-flex;"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex:none;"><path d="M2.5 8H13M9.5 4L13.5 8L9.5 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></span>
+        </a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- Gründer-Zitat: Brücke nach CAIPEX Live -->
+  <div style="background:#0F2C27;position:relative;overflow:hidden;">
+    <div style="max-width:920px;margin:0 auto;padding:clamp(56px,7vw,84px) 32px;text-align:center;position:relative;z-index:1;">
+      <p style="margin:0;font-family:'Schibsted Grotesk';font-weight:700;font-size:clamp(1.8rem,4vw,3.2rem);letter-spacing:-0.02em;color:#EDF0EF;line-height:1.1;text-wrap:balance;">Aus Fotos wird ein Bestandsgebäude, das mitdenkt.</p>
+      <div style="margin-top:20px;display:inline-flex;align-items:center;gap:10px;">
+        <div style="width:24px;height:1.5px;background:#F15200;flex-shrink:0;"></div>
+        <span style="font-family:'Schibsted Grotesk';font-size:0.82rem;color:#BAC6C2;">Lucas Pfeiffer · Gründer</span>
+      </div>
+    </div>
+    <img src="img/founder.png" alt="Lucas Pfeiffer, Gründer CAIPEX" loading="lazy" style="position:absolute;bottom:0;right:32px;width:clamp(120px,14vw,175px);opacity:0.92;pointer-events:none;">
+  </div>
+
+  <!-- ====================== ROLLENWECHSEL ====================== -->
+  <section id="rollen" style="background:#ffffff;padding:clamp(72px,9vw,112px) 32px;">
+    <div style="max-width:1240px;margin:0 auto;">
+      <div style="width:100%;">
+          <div data-reveal="" style="display:flex;align-items:center;gap:14px;margin-bottom:22px;">
+            <span style="width:26px;height:2px;background:#F15200;flex:none;border-radius:2px;"></span>
+            <span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:0.8rem;letter-spacing:0.24em;text-transform:uppercase;color:#0F2C27;white-space:nowrap;">Rollenwechsel</span>
+          </div>
+          <h3 data-reveal="" style="font-family:'Schibsted Grotesk';font-weight:700;font-size:clamp(2.1rem,3.8vw,3.3rem);line-height:1.05;letter-spacing:-0.03em;margin:0;max-width:20ch;text-wrap:balance;color:#0F2C27;">Vom Ausführenden zum <span style="color:#F15200;">Qualitätsprüfer.</span></h3>
+          <p data-reveal="" style="margin:22px 0 0;font-size:clamp(1.1rem,1.5vw,1.3rem);line-height:1.5;color:#4A5651;max-width:54ch;text-wrap:pretty;">Sie müssen nicht mehr jedes Bauteil selbst bewerten — nur noch entscheiden, ob die Einschätzung stimmt.</p>
+
+          <!-- Grafik: CAIPEX bewertet — Sie geben frei -->
+          <div data-reveal="" style="margin-top:36px;position:relative;background:#0F2C27;border-radius:8px;padding:clamp(28px,4.5vw,56px) clamp(28px,4.5vw,56px) clamp(48px,5vw,64px);overflow:hidden;">
+            <div style="position:absolute;top:-120px;right:-120px;width:420px;height:420px;border-radius:50%;background:radial-gradient(circle,rgba(237,240,239,0.05),transparent 70%);pointer-events:none;"></div>
+
+            <div style="position:relative;display:flex;flex-wrap:wrap;gap:clamp(28px,4vw,56px);align-items:center;">
+
+              <!-- links: CAIPEX arbeitet -->
+              <div style="flex:1 1 240px;min-width:220px;display:flex;flex-direction:column;gap:12px;">
+                <div data-once="rv" style="--d:0s;display:flex;align-items:center;gap:12px;">
+                  <img src="img/hh-dach.jpg" alt="" loading="lazy" style="width:64px;height:48px;object-fit:cover;border-radius:4px;flex:none;">
+                  <div style="flex:1;min-width:0;"><div style="font-family:'Schibsted Grotesk';font-weight:700;font-size:0.82rem;color:#EDF0EF;">Dach</div><div style="height:3px;margin-top:5px;background:rgba(237,240,239,0.14);border-radius:2px;overflow:hidden;"><div data-once="rvline" style="--d:.5s;height:100%;width:100%;background:#F15200;"></div></div></div>
+                </div>
+                <div data-once="rv" style="--d:.15s;display:flex;align-items:center;gap:12px;">
+                  <img src="img/gem-fassade.jpg" alt="" loading="lazy" style="width:64px;height:48px;object-fit:cover;border-radius:4px;flex:none;">
+                  <div style="flex:1;min-width:0;"><div style="font-family:'Schibsted Grotesk';font-weight:700;font-size:0.82rem;color:#EDF0EF;">Fassade</div><div style="height:3px;margin-top:5px;background:rgba(237,240,239,0.14);border-radius:2px;overflow:hidden;"><div data-once="rvline" style="--d:.7s;height:100%;width:100%;background:#F15200;"></div></div></div>
+                </div>
+                <div data-once="rv" style="--d:.3s;display:flex;align-items:center;gap:12px;">
+                  <img src="img/hh-heizung.jpg" alt="" loading="lazy" style="width:64px;height:48px;object-fit:cover;border-radius:4px;flex:none;">
+                  <div style="flex:1;min-width:0;"><div style="font-family:'Schibsted Grotesk';font-weight:700;font-size:0.82rem;color:#EDF0EF;">Heizung</div><div style="height:3px;margin-top:5px;background:rgba(237,240,239,0.14);border-radius:2px;overflow:hidden;"><div data-once="rvline" style="--d:.9s;height:100%;width:100%;background:#F15200;"></div></div></div>
+                </div>
+                <div data-once="rv" style="--d:.45s;margin-top:10px;font-family:'Schibsted Grotesk';font-size:0.75rem;letter-spacing:0.18em;text-transform:uppercase;color:#BAC6C2;">CAIPEX bewertet</div>
+              </div>
+
+              <!-- rechts: der Bericht + Freigabe -->
+              <div style="flex:1.5 1 340px;min-width:300px;position:relative;">
+                <div style="background:#fff;border-radius:6px;overflow:hidden;box-shadow:0 20px 50px -20px rgba(0,0,0,0.5);">
+                  <div style="padding:16px 22px;border-bottom:1px solid rgba(15,44,39,0.1);display:flex;justify-content:space-between;align-items:baseline;gap:12px;">
+                    <span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:0.95rem;color:#0F2C27;">Zustandsbewertung</span>
+                    <span style="font-family:'Schibsted Grotesk';font-size:0.75rem;letter-spacing:0.1em;text-transform:uppercase;color:#66706B;">Lindenallee 7</span>
+                  </div>
+                  <div data-once="rv" style="--d:1.1s;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 22px;border-bottom:1px solid rgba(15,44,39,0.07);">
+                    <span style="font-size:0.9rem;color:#0F2C27;font-weight:600;">Dach</span>
+                    <span style="display:flex;align-items:center;gap:14px;"><span style="font-size:0.84rem;color:#66706B;">Zustandsklasse 3 · 84.000 €</span><svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true" style="flex:none;"><path d="M2.5 7.5L5.5 10.5L11.5 3.5" stroke="#0F2C27" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+                  </div>
+                  <div data-once="rv" style="--d:1.3s;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 22px;border-bottom:1px solid rgba(15,44,39,0.07);">
+                    <span style="font-size:0.9rem;color:#0F2C27;font-weight:600;">Fassade</span>
+                    <span style="display:flex;align-items:center;gap:14px;"><span style="font-size:0.84rem;color:#66706B;">Zustandsklasse 2 · 21.500 €</span><svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true" style="flex:none;"><path d="M2.5 7.5L5.5 10.5L11.5 3.5" stroke="#0F2C27" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+                  </div>
+                  <div data-once="rv" style="--d:1.5s;display:flex;justify-content:space-between;align-items:center;gap:12px;padding:13px 22px;">
+                    <span style="font-size:0.9rem;color:#0F2C27;font-weight:600;">Heizung</span>
+                    <span style="display:flex;align-items:center;gap:14px;"><span style="font-size:0.84rem;color:#66706B;">Zustandsklasse 4 · 96.000 €</span><svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true" style="flex:none;"><path d="M2.5 7.5L5.5 10.5L11.5 3.5" stroke="#0F2C27" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg></span>
+                  </div>
+                  <!-- Human in the loop: Freigabe-Zeile im Bericht -->
+                  <div data-once="rv" style="--d:2s;border-top:1.5px dashed rgba(15,44,39,0.25);padding:15px 22px;display:flex;align-items:center;gap:13px;background:#F7F8F7;">
+                    <img src="img/founder.png" alt="" loading="lazy" style="width:34px;height:34px;border-radius:50%;object-fit:cover;flex:none;border:1.5px solid rgba(15,44,39,0.15);">
+                    <div style="flex:1;min-width:0;">
+                      <div style="font-family:'Schibsted Grotesk';font-weight:700;font-size:0.88rem;color:#0F2C27;">Ihre Freigabe</div>
+                    </div>
+                    <div data-once="rv" style="--d:2.5s;flex:none;display:inline-flex;align-items:center;gap:8px;background:#fff;border:1px solid rgba(15,44,39,0.18);color:#0F2C27;font-family:'Schibsted Grotesk';font-weight:700;font-size:0.78rem;letter-spacing:0.06em;text-transform:uppercase;padding:8px 15px;border-radius:999px;">Bestätigt <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true" style="flex:none;"><path d="M2.5 7.5L5.5 10.5L11.5 3.5" stroke="#0F2C27" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg></div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- zwei Aussagen -->
+          <div data-reveal="" style="display:flex;justify-content:center;gap:clamp(40px,7vw,96px);margin-top:48px;flex-wrap:wrap;">
+            <div style="text-align:center;"><div style="font-family:'Schibsted Grotesk';font-weight:500;font-size:clamp(1.9rem,3.2vw,2.7rem);letter-spacing:-0.02em;color:#0F2C27;line-height:1.05;">Die Tiefe</div><div style="font-family:'Schibsted Grotesk';font-size:0.92rem;letter-spacing:0.16em;text-transform:uppercase;color:#66706B;margin-top:8px;">kommt von CAIPEX</div></div>
+            <div style="width:1px;background:rgba(15,44,39,0.15);align-self:stretch;"></div>
+            <div style="text-align:center;"><div style="font-family:'Schibsted Grotesk';font-weight:500;font-size:clamp(1.9rem,3.2vw,2.7rem);letter-spacing:-0.02em;color:#0F2C27;line-height:1.05;">Das Urteil</div><div style="font-family:'Schibsted Grotesk';font-size:0.92rem;letter-spacing:0.16em;text-transform:uppercase;color:#F15200;margin-top:8px;">bleibt bei Ihnen</div></div>
+          </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ====================== PREISE ====================== -->
+  <section id="preise" style="position:relative;background:#ffffff;padding:clamp(72px,9vw,112px) 32px;border-top:1px solid rgba(15,44,39,0.08);overflow:hidden;">
+    <div style="max-width:1240px;margin:0 auto;">
+
+      <!-- header -->
+      <div data-reveal="" style="max-width:820px;">
+        <div style="display:flex;align-items:center;gap:16px;margin-bottom:22px;">
+          <span style="width:26px;height:2px;background:#F15200;flex:none;border-radius:2px;"></span><span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:0.8rem;letter-spacing:0.24em;text-transform:uppercase;color:#0F2C27;white-space:nowrap;">Preise</span>
+        </div>
+        <h2 style="font-family:'Schibsted Grotesk';font-weight:700;font-size:clamp(1.9rem,3.4vw,3rem);line-height:1.06;letter-spacing:-0.02em;margin:0;color:#0F2C27;">Preis pro Gebäude.<br><span style="color: rgb(241, 82, 0);"></span></h2>
+        <p style="font-size:clamp(1.0625rem,1.3vw,1.15rem);line-height:1.55;color:#3D4744;margin:22px 0 0;max-width:640px;text-wrap:pretty;">Sie zahlen einen einmaligen Festpreis je Objekt — abhängig von der Gebäudeklasse und Komplexität. Ab 10 Gebäuden sinkt der Preis pro Objekt.</p>
+      </div>
+
+      <div data-reveal="" style="display:flex;flex-wrap:wrap;align-items:stretch;gap:18px;margin-top:clamp(40px,5vw,60px);">
+
+        <!-- DEMO -->
+        <div data-pricecard="" style="flex:1 1 250px;display:flex;flex-direction:column;background:#fff;border:1px solid rgba(15,44,39,0.16);border-radius:8px;padding:28px 26px;">
+          <div style="font-family:'Schibsted Grotesk';font-size:0.75rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#66706B;">Demo</div>
+          <div style="display:flex;align-items:baseline;gap:8px;margin-top:14px;">
+            <span style="font-family:'Schibsted Grotesk';font-weight:800;font-size:2.6rem;letter-spacing:-0.02em;color:#0F2C27;line-height:1;">0 €</span>
+          </div>
+          <div style="font-family:'Schibsted Grotesk';font-size:0.86rem;font-weight:600;color:#66706B;margin-top:8px;">einmalig · 1 Gebäude</div>
+          <div style="height:1px;background:rgba(15,44,39,0.1);margin:20px 0;"></div>
+          <div style="display:flex;flex-direction:column;gap:11px;">
+            <div style="display:flex;align-items:baseline;gap:10px;"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true" style="flex:none;transform:translateY(2px);"><path d="M2.5 7.5L5.5 10.5L11.5 3.5" stroke="#0F2C27" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg><span style="font-size:0.9rem;line-height:1.5;color:#3D4744;">Der komplette Durchlauf an einem Objekt</span></div>
+            <div style="display:flex;align-items:baseline;gap:10px;"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true" style="flex:none;transform:translateY(2px);"><path d="M2.5 7.5L5.5 10.5L11.5 3.5" stroke="#0F2C27" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg><span style="font-size:0.9rem;line-height:1.5;color:#3D4744;">Vollständiger Zustandsbericht als PDF</span></div>
+            <div style="display:flex;align-items:baseline;gap:10px;"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true" style="flex:none;transform:translateY(2px);"><path d="M2.5 7.5L5.5 10.5L11.5 3.5" stroke="#0F2C27" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg><span style="font-size:0.9rem;line-height:1.5;color:#3D4744;">Keine Folgekosten</span></div>
+          </div>
+          <div style="flex:1;min-height:24px;"></div>
+          <a href="#download" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid rgba(15,44,39,0.3);border-radius:4px;padding:13px 20px;color:#0F2C27;text-decoration:none;font-family:'Schibsted Grotesk';font-weight:700;font-size:0.95rem;">Kostenlos testen <span aria-hidden="true" style="display:inline-flex;"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex:none;"><path d="M2.5 8H13M9.5 4L13.5 8L9.5 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
+        </div>
+
+        <!-- PRO GEBÄUDE: Einzelpreis-Tabelle + Mengenstaffel als eine Einheit -->
+        <div data-pricecard-dark="" style="flex:2.4 1 560px;position:relative;display:flex;flex-wrap:wrap;gap:18px;">
+
+          <!-- Spalte 1: Preismatrix je Gebäudeklasse — hervorgehobene Karte -->
+          <div style="flex:1.6 1 320px;display:flex;flex-direction:column;padding:30px 28px;background:#0F2C27;border-radius:8px;box-shadow:0 34px 66px -26px rgba(15,44,39,0.5);">
+            <div style="display:flex;align-items:baseline;justify-content:space-between;gap:10px;">
+              <span style="font-family:'Schibsted Grotesk';font-size:0.75rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:rgba(237,240,239,0.72);">Preis pro Gebäude</span>
+              <span style="font-family:'Schibsted Grotesk';font-size:0.72rem;font-weight:600;color:rgba(237,240,239,0.55);">netto · einmalig</span>
+            </div>
+            <div style="display:flex;flex-direction:column;margin-top:16px;">
+              <div style="display:grid;grid-template-columns:2fr 1fr;gap:6px;padding-bottom:9px;border-bottom:2px solid rgba(237,240,239,0.22);font-family:'Schibsted Grotesk';font-size:0.68rem;font-weight:700;letter-spacing:0.03em;text-transform:uppercase;color:rgba(237,240,239,0.6);"><div>Klasse</div><div style="text-align:right;color:#EDF0EF;">Preis</div></div>
+              <div style="display:grid;grid-template-columns:2fr 1fr;gap:6px;padding:10px 0;border-bottom:1px solid rgba(237,240,239,0.14);align-items:baseline;"><span style="font-family:'Schibsted Grotesk';font-size:0.86rem;color:rgba(237,240,239,0.78);"><strong style="color:#EDF0EF;font-weight:700;">WG1</strong> · EFH</span><span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:0.95rem;color:#EDF0EF;text-align:right;">320 €</span></div>
+              <div style="display:grid;grid-template-columns:2fr 1fr;gap:6px;padding:10px 0;border-bottom:1px solid rgba(237,240,239,0.14);align-items:baseline;"><span style="font-family:'Schibsted Grotesk';font-size:0.86rem;color:rgba(237,240,239,0.78);"><strong style="color:#EDF0EF;font-weight:700;">WG2</strong> · MFH</span><span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:0.95rem;color:#EDF0EF;text-align:right;">560 €</span></div>
+              <div style="display:grid;grid-template-columns:2fr 1fr;gap:6px;padding:10px 0;border-bottom:1px solid rgba(237,240,239,0.14);align-items:baseline;"><span style="font-family:'Schibsted Grotesk';font-size:0.86rem;color:rgba(237,240,239,0.78);"><strong style="color:#EDF0EF;font-weight:700;">NWG1</strong> · einfach</span><span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:0.95rem;color:#EDF0EF;text-align:right;">800 €</span></div>
+              <div style="display:grid;grid-template-columns:2fr 1fr;gap:6px;padding:10px 0;border-bottom:1px solid rgba(237,240,239,0.14);align-items:baseline;"><span style="font-family:'Schibsted Grotesk';font-size:0.86rem;color:rgba(237,240,239,0.78);"><strong style="color:#EDF0EF;font-weight:700;">NWG2</strong> · komplex</span><span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:0.95rem;color:#EDF0EF;text-align:right;">1.150 €</span></div>
+              <div style="display:grid;grid-template-columns:2fr 1fr;gap:6px;padding:10px 0;border-bottom:1px solid rgba(237,240,239,0.14);align-items:baseline;"><span style="font-family:'Schibsted Grotesk';font-size:0.86rem;color:rgba(237,240,239,0.78);"><strong style="color:#EDF0EF;font-weight:700;">NWG3</strong> · Sonderbau</span><span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:0.95rem;color:#EDF0EF;text-align:right;">1.450 €</span></div>
+            </div>
+            <div style="display:flex;align-items:center;gap:8px;margin-top:14px;font-family:'Hanken Grotesk';font-size:0.8rem;line-height:1.5;color:rgba(237,240,239,0.72);"><svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden="true" style="flex:none;"><path d="M2.5 7.5L5.5 10.5L11.5 3.5" stroke="#F15200" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg>Voller Leistungsumfang — in jeder Klasse.</div>
+            <div style="flex:1;min-height:16px;"></div>
+            <a href="#download" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;background:#F15200;border-radius:4px;padding:14px 22px;color:#EDF0EF;text-decoration:none;font-family:'Schibsted Grotesk';font-weight:700;font-size:0.98rem;margin-top:18px;">Gebäude bewerten <span aria-hidden="true" style="display:inline-flex;"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex:none;"><path d="M2.5 8H13M9.5 4L13.5 8L9.5 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
+          </div>
+
+          <!-- Spalte 2: Mengenstaffel mit Rechenbeispiel — abgesetzte Karte -->
+          <div style="flex:1 1 240px;display:flex;flex-direction:column;padding:28px 26px;background:#fff;border:1px solid rgba(15,44,39,0.16);border-radius:8px;">
+            <div style="font-family:'Schibsted Grotesk';font-size:0.75rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#0F2C27;">Mengenstaffel</div>
+            <div style="font-family:'Hanken Grotesk';font-size:0.86rem;line-height:1.5;color:#66706B;margin-top:8px;">Je mehr Gebäude, desto günstiger jedes einzelne.</div>
+            <div style="display:flex;flex-direction:column;gap:8px;margin-top:18px;">
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border-radius:6px;background:rgba(15,44,39,0.04);"><span style="font-family:'Schibsted Grotesk';font-size:0.86rem;font-weight:700;color:#0F2C27;">Einzel</span><span style="font-family:'Schibsted Grotesk';font-weight:600;font-size:0.82rem;color:#66706B;">1 – 9 Gebäude</span></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border-radius:6px;background:rgba(15,44,39,0.04);"><span style="font-family:'Schibsted Grotesk';font-size:0.86rem;font-weight:700;color:#0F2C27;">Portfolio</span><span style="font-family:'Schibsted Grotesk';font-weight:600;font-size:0.82rem;color:#66706B;">10 – 49 Gebäude</span></div>
+              <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 14px;border-radius:6px;background:rgba(15,44,39,0.07);border:1px solid rgba(15,44,39,0.2);"><span style="font-family:'Schibsted Grotesk';font-size:0.86rem;font-weight:700;color:#0F2C27;">Max</span><span style="font-family:'Schibsted Grotesk';font-weight:600;font-size:0.82rem;color:#0F2C27;">ab 50 Gebäude</span></div>
+            </div>
+            <div style="margin-top:18px;padding-top:16px;border-top:1px solid rgba(15,44,39,0.12);">
+              <div style="font-family:'Schibsted Grotesk';font-size:0.72rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:#66706B;margin-bottom:10px;">Beispiel · Mehrfamilienhaus</div>
+              <div style="display:flex;align-items:center;gap:8px;flex-wrap:wrap;font-family:'Schibsted Grotesk';"><span style="font-weight:700;font-size:0.95rem;color:#0F2C27;">560 €</span><span style="color:#66706B;">→</span><span style="font-weight:700;font-size:0.95rem;color:#0F2C27;">500 €</span><span style="color:#66706B;">→</span><span style="font-weight:800;font-size:0.95rem;color:#F15200;">450 €</span></div>
+              <div style="font-family:'Hanken Grotesk';font-size:0.76rem;color:#66706B;margin-top:6px;">je Objekt bei 1 · 10 · 50 Gebäuden</div>
+            </div>
+            <div style="flex:1;min-height:12px;"></div>
+            <a href="mailto:info@caipex.de?subject=Angebot%20CAIPEX%20Portfolio" style="display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid rgba(15,44,39,0.3);border-radius:4px;padding:13px 20px;color:#0F2C27;text-decoration:none;font-family:'Schibsted Grotesk';font-weight:700;font-size:0.92rem;margin-top:18px;">Portfolio-Angebot anfragen <span aria-hidden="true" style="display:inline-flex;"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex:none;"><path d="M2.5 8H13M9.5 4L13.5 8L9.5 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
+          </div>
+</div>
+        </div>
+
+        <!-- CAIPEX LIVE: optionales Band über alle drei Modelle -->
+        <div id="live" data-reveal="" style="flex:1 1 100%;scroll-margin-top:90px;display:flex;flex-wrap:wrap;align-items:center;gap:20px clamp(28px,4vw,56px);background:#EDF0EF;border:1px solid rgba(15,44,39,0.12);border-radius:8px;padding:24px 26px;">
+          <div style="flex:0 0 auto;">
+            <div style="display:flex;align-items:center;gap:10px;">
+              <span style="font-family:'Schibsted Grotesk';font-size:0.75rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;color:#0F2C27;">CAIPEX Live</span>
+              <span style="font-family:'Schibsted Grotesk';font-size:0.75rem;font-weight:800;letter-spacing:0.1em;text-transform:uppercase;color:#F15200;border:1px solid rgba(241,82,0,0.45);border-radius:2px;padding:3px 8px;">Optional</span>
+            </div>
+            <div style="font-family:'Schibsted Grotesk';font-weight:800;font-size:1.9rem;letter-spacing:-0.02em;color:#0F2C27;line-height:1;margin-top:10px;">19–39 € <span style="font-size:0.95rem;font-weight:700;color:#66706B;letter-spacing:0;">/ Monat</span></div>
+            <div style="font-family:'Schibsted Grotesk';font-size:0.82rem;font-weight:600;color:#66706B;margin-top:6px;">pro Gebäude · jederzeit kündbar</div>
+          </div>
+          <div style="flex:1 1 300px;max-width:52ch;font-size:0.92rem;line-height:1.55;color:#3D4744;">Ihr Gebäude bleibt nach dem Bericht aktiv — CAPEX-Plan, Chat und jährliches Update per Fotos.</div>
+          <a href="mailto:info@caipex.de?subject=CAIPEX%20Live" style="flex:0 0 auto;display:inline-flex;align-items:center;gap:8px;border:1px solid rgba(15,44,39,0.3);border-radius:4px;padding:12px 20px;color:#0F2C27;text-decoration:none;font-family:'Schibsted Grotesk';font-weight:700;font-size:0.92rem;background:#fff;">Live aktivieren <span aria-hidden="true" style="display:inline-flex;"><svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex:none;"><path d="M2.5 8H13M9.5 4L13.5 8L9.5 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg></span></a>
+        </div>
+
+      </div>
+
+  <!-- Pilotpartner-Hinweis: ehrlicher Social-Proof-Ersatz vor Launch -->
+      
+    </section></div>
+  
+
+  <!-- ====================== WER WIR SIND ====================== -->
+  <section id="team" style="background:#EDF0EF;border-top:1px solid rgba(15,44,39,0.08);border-bottom:1px solid rgba(15,44,39,0.08);padding:clamp(40px,5vw,64px) 32px;">
+    <div style="max-width:1240px;margin:0 auto;display:flex;flex-wrap:wrap;gap:clamp(32px,5vw,64px);align-items:stretch;">
+
+      <!-- Text + Fakten -->
+      <div style="flex:1 1 100%;display:flex;flex-direction:column;">
+        <div data-reveal="">
+          <div style="display:flex;align-items:center;gap:16px;margin-bottom:14px;">
+            <span style="width:26px;height:2px;background:#F15200;flex:none;border-radius:2px;"></span><span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:0.8rem;letter-spacing:0.24em;text-transform:uppercase;color:#0F2C27;white-space:nowrap;">Über uns</span>
+          </div>
+          <h2 style="font-family:'Schibsted Grotesk';font-weight:700;font-size:clamp(1.9rem,3.4vw,3rem);line-height:1.08;letter-spacing:-0.02em;margin:0;color:#0F2C27;">Wir haben Bestand jahrelang selbst bewertet.</h2>
+        </div>
+        <div data-reveal="" style="margin-top:14px;max-width:760px;">
+          <p style="font-size:0.98rem;line-height:1.5;color:#3D4744;margin:0;text-wrap:pretty;">Seit über zehn Jahren analysieren wir Bestandsimmobilien — seit 2024 steckt diese Erfahrung in CAIPEX: einer Methode, die jedes Bauteil systematisch erfasst und bewertet, ohne an fachlicher Tiefe zu verlieren.</p>
+        </div>
+
+        <!-- founder: größere Fotos, Bild oben, Text darunter — kein Kachel-Look -->
+        <div data-reveal="" style="display:flex;flex-wrap:wrap;gap:clamp(28px,4vw,48px);margin-top:28px;">
+
+          <div style="flex:1 1 300px;min-width:260px;display:flex;gap:20px;align-items:flex-start;">
+            <div style="width:180px;height:225px;flex:none;border-radius:8px;overflow:hidden;">
+              <img src="uploads/lucas-pfeiffer.png" alt="Lucas Pfeiffer" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:50% 18%;">
+            </div>
+            <div>
+              <div style="font-family:'Schibsted Grotesk';font-weight:700;font-size:1.1rem;color:#0F2C27;">Lucas Pfeiffer</div>
+              <div style="font-family:'Schibsted Grotesk';font-size:0.78rem;color:#66706B;margin-top:2px;">Gründer &amp; CEO</div>
+              <p style="font-size:0.86rem;line-height:1.5;color:#3D4744;margin:10px 0 0;max-width:30ch;">Bau- und Wirtschaftsingenieur, Sachverständiger für Immobilienbewertung. Baute bei THOST die Bereiche Technical Due Diligence und ESG auf.</p>
+              <div style="margin-top:12px;display:flex;flex-direction:column;gap:3px;">
+                <a href="mailto:l.pfeiffer@caipex.de" style="font-family:'Schibsted Grotesk';font-size:0.8rem;font-weight:700;color:#0F2C27;text-decoration:none;display:inline-flex;align-items:center;gap:6px;">l.pfeiffer@caipex.de <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex:none;"><path d="M2.5 8H13M9.5 4L13.5 8L9.5 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+                <a href="tel:+4915204038662" style="font-family:'Schibsted Grotesk';font-size:0.8rem;font-weight:700;color:#0F2C27;text-decoration:none;">0152 04038662</a>
+              </div>
+            </div>
+          </div>
+
+          <div style="flex:1 1 300px;min-width:260px;display:flex;gap:20px;align-items:flex-start;">
+            <div style="width:180px;height:225px;flex:none;border-radius:8px;overflow:hidden;">
+              <img src="uploads/bernhard-schochenmaier.png" alt="Bernhard Schochenmaier" loading="lazy" style="width:100%;height:100%;object-fit:cover;object-position:50% 18%;">
+            </div>
+            <div>
+              <div style="font-family:'Schibsted Grotesk';font-weight:700;font-size:1.1rem;color:#0F2C27;">Bernhard Schochenmaier</div>
+              <div style="font-family:'Schibsted Grotesk';font-size:0.78rem;color:#66706B;margin-top:2px;">Gründer &amp; CTO</div>
+              <p style="font-size:0.86rem;line-height:1.5;color:#3D4744;margin:10px 0 0;max-width:30ch;">Eingetragener Energieberater und Wirtschaftsingenieur. Experte für ESG-Bewertung und die technische Entwicklung von CAIPEX.</p>
+              <div style="margin-top:12px;display:flex;flex-direction:column;gap:3px;">
+                <a href="mailto:b.schochenmaier@caipex.de" style="font-family:'Schibsted Grotesk';font-size:0.8rem;font-weight:700;color:#0F2C27;text-decoration:none;display:inline-flex;align-items:center;gap:6px;">b.schochenmaier@caipex.de <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex:none;"><path d="M2.5 8H13M9.5 4L13.5 8L9.5 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+                <a href="tel:+4917684119684" style="font-family:'Schibsted Grotesk';font-size:0.8rem;font-weight:700;color:#0F2C27;text-decoration:none;">0176 84119684</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Fakten-Leiste als Abschluss der Seite -->
+        <div data-reveal="" style="display:flex;flex-wrap:wrap;gap:0;margin-top:32px;border-top:2px solid #0F2C27;">
+          <div style="flex:1 1 150px;padding:16px 22px 0 0;">
+            <div style="font-family:'Schibsted Grotesk';font-weight:800;font-size:1.7rem;line-height:1;color:#0F2C27;letter-spacing:-0.02em;">10+</div>
+            <div style="font-family:'Schibsted Grotesk';font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#66706B;margin-top:6px;">Jahre Bestandsbewertung</div>
+          </div>
+          <div style="flex:1 1 150px;padding:16px 22px 0;border-left:1px solid rgba(15,44,39,0.16);">
+            <div style="font-family:'Schibsted Grotesk';font-weight:800;font-size:1.7rem;line-height:1;color:#0F2C27;letter-spacing:-0.02em;">1.000+</div>
+            <div style="font-family:'Schibsted Grotesk';font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#66706B;margin-top:6px;">Bestandsanalysen</div>
+          </div>
+          <div style="flex:1 1 150px;padding:16px 0 0 22px;border-left:1px solid rgba(15,44,39,0.16);">
+            <div style="font-family:'Schibsted Grotesk';font-weight:800;font-size:1.7rem;line-height:1;color:#0F2C27;letter-spacing:-0.02em;">2024</div>
+            <div style="font-family:'Schibsted Grotesk';font-size:0.75rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:#66706B;margin-top:6px;">Fachkompetenz trifft Methodik</div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ====================== FAQ (Frag CAIPEX) ====================== -->
+  <section id="faq" style="max-width:1240px;margin:0 auto;padding:clamp(72px,9vw,112px) 32px;">
+    <div data-reveal="" style="margin-bottom:28px;">
+      <div style="display:flex;align-items:center;gap:16px;margin-bottom:18px;">
+        <span style="width:26px;height:2px;background:#F15200;flex:none;border-radius:2px;"></span><span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:0.8rem;letter-spacing:0.24em;text-transform:uppercase;color:#0F2C27;white-space:nowrap;">FAQ</span>
+      </div>
+      <h2 style="font-family:'Schibsted Grotesk';font-weight:700;font-size:clamp(1.9rem,3.4vw,3rem);letter-spacing:-0.02em;margin:0;">Häufige Fragen</h2>
+    </div>
+
+    <div data-reveal="" class="cpx-acc" style="border-top:2px solid #0F2C27;">
+
+      <details style="border-bottom:1px solid rgba(15,44,39,0.12);">
+        <summary style="display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px 4px;">
+          <span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:1.05rem;color:#0F2C27;">Für wen ist CAIPEX gedacht?</span>
+          <span class="cpx-acc-x" style="flex-shrink:0;width:28px;height:28px;border:1px solid rgba(15,44,39,0.25);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:1.05rem;line-height:1;color:#0F2C27;">+</span>
+        </summary>
+        <p style="margin:0;padding:0 44px 22px 4px;font-size:0.98rem;line-height:1.65;color:#3D4744;max-width:70ch;">Die Aufnahme vor Ort dauert je nach Gebäude wenige Stunden. Nach der Vor-Ort Begehung wird alles nochmal durchgesehen und überprüft. Anschließend kann mit einem Knopfdruck der vollständige Zustandsbericht generiert werden — inklusive Priorisierung und Kostenschätzung.</p>
+      </details>
+
+      <details style="border-bottom:1px solid rgba(15,44,39,0.12);">
+        <summary style="display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px 4px;">
+          <span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:1.05rem;color:#0F2C27;">Wie verlässlich sind die Ergebnisse?</span>
+          <span class="cpx-acc-x" style="flex-shrink:0;width:28px;height:28px;border:1px solid rgba(15,44,39,0.25);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:1.05rem;line-height:1;color:#0F2C27;">+</span>
+        </summary>
+        <p style="margin:0;padding:0 44px 22px 4px;font-size:0.98rem;line-height:1.65;color:#3D4744;max-width:70ch;">CAIPEX basiert auf über zehn Jahren Bewertungspraxis und mehr als 1.000 manuell durchgeführten Bestandsanalysen. Jedes Bauteil wird systematisch erfasst und bewertet — das Ergebnis hält fachlicher Prüfung stand. Die Verantwortung bleibt bei Ihnen; CAIPEX stellt sicher, dass kein Schritt vergessen wird.</p>
+      </details>
+
+      <details style="border-bottom:1px solid rgba(15,44,39,0.12);">
+        <summary style="display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px 4px;">
+          <span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:1.05rem;color:#0F2C27;">Brauche ich Vorkenntnisse?</span>
+          <span class="cpx-acc-x" style="flex-shrink:0;width:28px;height:28px;border:1px solid rgba(15,44,39,0.25);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:1.05rem;line-height:1;color:#0F2C27;">+</span>
+        </summary>
+        <p style="margin:0;padding:0 44px 22px 4px;font-size:0.98rem;line-height:1.65;color:#3D4744;max-width:70ch;">Nein. Die App führt Bauteil für Bauteil durch das Gebäude — wie ein erfahrener Kollege, der neben Ihnen steht. Fotografieren genügt, die technische Bewertung übernimmt CAIPEX.</p>
+      </details>
+
+      <details style="border-bottom:1px solid rgba(15,44,39,0.12);">
+        <summary style="display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px 4px;">
+          <span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:1.05rem;color:#0F2C27;">Wie schnell ist eine Bewertung fertig?</span>
+          <span class="cpx-acc-x" style="flex-shrink:0;width:28px;height:28px;border:1px solid rgba(15,44,39,0.25);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:1.05rem;line-height:1;color:#0F2C27;">+</span>
+        </summary>
+        <p style="margin:0;padding:0 44px 22px 4px;font-size:0.98rem;line-height:1.65;color:#3D4744;max-width:70ch;">Die Aufnahme vor Ort dauert Stunden statt Tage. Direkt danach liegt der vollständige Zustandsbericht vor — inklusive Priorisierung und Kostenschätzung.</p>
+      </details>
+
+      <details style="border-bottom:1px solid rgba(15,44,39,0.12);">
+        <summary style="display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px 4px;">
+          <span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:1.05rem;color:#0F2C27;">Was steht im Zustandsbericht?</span>
+          <span class="cpx-acc-x" style="flex-shrink:0;width:28px;height:28px;border:1px solid rgba(15,44,39,0.25);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:1.05rem;line-height:1;color:#0F2C27;">+</span>
+        </summary>
+        <p style="margin:0;padding:0 44px 22px 4px;font-size:0.98rem;line-height:1.65;color:#3D4744;max-width:70ch;">Management Summary, technische Bewertung aller Bauteile, Fotodokumentation, Red-Flags, CRREM-Pfad-Analyse sowie kurz-, mittel- und langfristige Handlungsempfehlungen mit Kostenschätzung — als PDF-Export und im Dashboard.</p>
+      </details>
+
+      <details style="border-bottom:1px solid rgba(15,44,39,0.12);">
+        <summary style="display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px 4px;">
+          <span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:1.05rem;color:#0F2C27;">Was kostet CAIPEX?</span>
+          <span class="cpx-acc-x" style="flex-shrink:0;width:28px;height:28px;border:1px solid rgba(15,44,39,0.25);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:1.05rem;line-height:1;color:#0F2C27;">+</span>
+        </summary>
+        <p style="margin:0;padding:0 44px 22px 4px;font-size:0.98rem;line-height:1.65;color:#3D4744;max-width:70ch;">Die Demo ist kostenlos — ein Gebäude, kompletter Durchlauf. Danach zahlen Sie pro Objekt nach Gebäudeklasse: von 320 € (Einfamilienhaus) bis 1.450 € (Sonderbau). Ab 10 Objekten −10 %, ab 50 Objekten −20 % — für ganze Bestände kalkulieren wir individuell.</p>
+      </details>
+
+      <details style="border-bottom:1px solid rgba(15,44,39,0.12);">
+        <summary style="display:flex;align-items:center;justify-content:space-between;gap:18px;padding:20px 4px;">
+          <span style="font-family:'Schibsted Grotesk';font-weight:700;font-size:1.05rem;color:#0F2C27;">Wie ist das mit Datenschutz und DSGVO?</span>
+          <span class="cpx-acc-x" style="flex-shrink:0;width:28px;height:28px;border:1px solid rgba(15,44,39,0.25);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:1.05rem;line-height:1;color:#0F2C27;">+</span>
+        </summary>
+        <p style="margin:0;padding:0 44px 22px 4px;font-size:0.98rem;line-height:1.65;color:#3D4744;max-width:70ch;">CAIPEX verarbeitet Daten ausschließlich auf deutschen Servern, vollständig DSGVO-konform. Objektdaten werden nicht für das Training von KI-Modellen verwendet. Ihre Daten bleiben Ihre Daten.</p>
+      </details>
+
+    </div>
+
+    <p data-reveal="" style="margin:26px 0 0;font-size:0.95rem;color:#66706B;">Ihre Frage ist nicht dabei? <a href="mailto:info@caipex.de?subject=Frage%20zu%20CAIPEX" style="color:#0F2C27;font-weight:700;text-decoration:none;border-bottom:2px solid #F15200;padding-bottom:2px;display:inline-flex;align-items:center;gap:6px;">Schreiben Sie uns <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex:none;"><path d="M2.5 8H13M9.5 4L13.5 8L9.5 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg></a></p>
+  </section>
+
+  <!-- ====================== CTA / DOWNLOAD ====================== -->
+  <section id="download" style="position:relative;background:#0F2C27;color:#EDF0EF;padding:clamp(72px,9vw,112px) 32px;overflow:hidden;">
+
+    <div style="position:relative;max-width:760px;margin:0 auto;text-align:center;">
+      <div data-reveal="" style="">
+        <h2 style="font-family:'Schibsted Grotesk';font-weight:700;font-size:clamp(2.2rem,5vw,4rem);line-height:1.02;letter-spacing:-0.03em;margin:0;text-wrap:balance;">Laden Sie Ihr Gebäude<br>in die Zukunft.</h2>
+        <p style="font-size:clamp(1.0625rem,1.3vw,1.15rem);line-height:1.55;color:#BAC6C2;margin:24px auto 0;max-width:500px;">CAIPEX läuft direkt im Browser — ohne Installation. Testen Sie Ihr erstes Gebäude kostenlos.</p>
+        <div style="display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:36px;">
+          <a href="https://app.caipex.de/login" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:10px;background:#F15200;color:#0F2C27;text-decoration:none;font-family:'Schibsted Grotesk';font-weight:700;font-size:1rem;padding:16px 30px;border-radius:4px;">Jetzt kostenlos starten <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true" style="flex:none;"><path d="M2.5 8H13M9.5 4L13.5 8L9.5 12" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"></path></svg></a>
+          <a href="mailto:info@caipex.de?subject=Anfrage%20CAIPEX" style="display:inline-flex;align-items:center;gap:10px;background:transparent;color:#EDF0EF;text-decoration:none;font-family:'Schibsted Grotesk';font-weight:700;font-size:1rem;padding:16px 28px;border-radius:4px;border:1px solid rgba(237,240,239,0.3);">Kontakt aufnehmen</a>
+        </div>
+        
+      </div>
+    </div>
+    </section>
+
+  <!-- ====================== FOOTER ====================== -->
+  <footer style="background:#0B221E;color:#EDF0EF;padding:30px 32px;border-top:1px solid rgba(237,240,239,0.1);">
+    <div style="max-width:1240px;margin:0 auto;display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px;align-items:center;">
+      <div style="display:flex;align-items:center;gap:10px;">
+        <img src="img/cpx-logo.png" alt="CAIPEX Logo" style="height:32px;width:32px;object-fit:contain;display:block;">
+        <span style="font-family:'Schibsted Grotesk';font-weight:700;letter-spacing:0.16em;color:#EDF0EF;">CAIPEX</span>
+      </div>
+      <div style="display:flex;flex-wrap:wrap;align-items:center;gap:8px 18px;font-family:'Schibsted Grotesk';font-size:0.78rem;color:#7E948D;">
+        <span>© 2026 CAIPEX&nbsp;</span>
+        <a href="mailto:info@caipex.de" style="color:#BAC6C2;text-decoration:none;border-bottom:1px solid rgba(237,240,239,0.25);">info@caipex.de</a>
+        <a href="rechtliches.html#impressum" style="color:#BAC6C2;text-decoration:none;border-bottom:1px solid rgba(237,240,239,0.25);">Impressum</a>
+        <a href="rechtliches.html#datenschutz" style="color:#BAC6C2;text-decoration:none;border-bottom:1px solid rgba(237,240,239,0.25);">Datenschutz</a>
+      </div>
+      <p style="flex:1 1 100%;margin:14px 0 0;padding-top:14px;border-top:1px solid rgba(237,240,239,0.1);font-size:0.75rem;line-height:1.55;color:rgba(237,240,239,0.5);max-width:900px;">Die KI-gestützten Auswertungen sind fachliche Entscheidungsunterstützung und ersetzen keine fachliche Prüfung; eine Gewähr für Richtigkeit, Vollständigkeit oder Eignung wird nicht übernommen.</p>
+    </div>
+  </footer>
+
+
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1280,&quot;height&quot;:900}}">
+class Component extends DCLogic {
+  state = { mobileOpen: false, chatVisible: 0, heroIdx: 0, heroFade: 1, twinIdx: 0, hoverM: 0, chatExtra: [], miniTyping: false };
+
+  chatScrollRef = React.createRef();
+
+  setTabPlan = () => this.setState({ rightTab: 'plan' });
+  setTabChat = () => {
+    this.setState({ rightTab: 'chat' });
+    if (!this._chatStarted) { this._chatStarted = true; this._runChat(); }
+  };
+
+  openPdfViewer = () => {
+    this.setState({ pdfOpen: true, pdfLoading: !this._pdfDoc, pdfError: false });
+    this._loadPdf();
+  };
+  pdfContainerRef = (el) => { this._pdfEl = el; if (el) this._renderPdf(); };
+  _loadPdf = async () => {
+    if (this._pdfDoc) { this._renderPdf(); return; }
+    if (this._pdfFetching) return;
+    this._pdfFetching = true;
+    try {
+      const pdfjs = await import(new URL('vendor/pdf.min.mjs', location.href).href);
+      pdfjs.GlobalWorkerOptions.workerSrc = new URL('vendor/pdf.worker.min.mjs', location.href).href;
+      const data = await (await fetch('CAIPEX-Beispielbericht.pdf')).arrayBuffer();
+      this._pdfDoc = await pdfjs.getDocument({ data, isEvalSupported: false, useWorkerFetch: false }).promise;
+      this.setState({ pdfLoading: false });
+      this._renderPdf();
+    } catch (e) {
+      this._pdfFetching = false;
+      this.setState({ pdfLoading: false, pdfError: true });
+    }
+  };
+  _renderPdf = async () => {
+    const el = this._pdfEl, doc = this._pdfDoc;
+    if (!el || !doc || el.dataset.rendered) return;
+    el.dataset.rendered = '1';
+    const width = Math.min((el.clientWidth || 928) - 32, 880);
+    const dpr = Math.min(window.devicePixelRatio || 1, 2);
+    for (let i = 1; i <= doc.numPages; i++) {
+      if (!el.isConnected) { delete el.dataset.rendered; return; }
+      const page = await doc.getPage(i);
+      const scale = width / page.getViewport({ scale: 1 }).width;
+      const vp = page.getViewport({ scale: scale * dpr });
+      const c = document.createElement('canvas');
+      c.width = vp.width; c.height = vp.height;
+      c.style.cssText = 'width:' + (vp.width / dpr) + 'px;height:' + (vp.height / dpr) + 'px;background:#fff;box-shadow:0 2px 14px rgba(0,0,0,0.35);flex:none;';
+      el.appendChild(c);
+      // intent:'print' — Display-Intent nutzt requestAnimationFrame und hängt in gedrosselten Tabs.
+      // Seite 1: pdf.js rendert den SMask-Verlaufs-Scrim des Covers magenta → Gradient-/Pattern-Fills dort überspringen.
+      const proto = CanvasRenderingContext2D.prototype, origFill = proto.fill;
+      if (i === 1) proto.fill = function (...a) { if (this.fillStyle && typeof this.fillStyle === 'object') return; return origFill.apply(this, a); };
+      try {
+        await page.render({ canvasContext: c.getContext('2d'), viewport: vp, intent: 'print' }).promise;
+      } finally { proto.fill = origFill; }
+    }
+  };
+  closePdfViewer = () => this.setState({ pdfOpen: false });
+  stopEvt = (e) => { e.stopPropagation(); };
+  toggleMobile = () => this.setState(s => ({ mobileOpen: !s.mobileOpen }));
+  _onKeydown = (e) => {
+    if (e.key !== 'Escape') return;
+    if (this.state.pdfOpen) this.setState({ pdfOpen: false });
+    else if (this.state.mobileOpen) this.setState({ mobileOpen: false });
+  };
+  _onResizeNav = () => { if (this.state.mobileOpen && window.innerWidth > 1100) this.setState({ mobileOpen: false }); };
+  closeMobile = () => { if (this.state.mobileOpen) this.setState({ mobileOpen: false }); };
+
+  // ---- Mini-Chat (Prognose-Dashboard) ----
+  miniChatInputRef = React.createRef();
+  _miniScroll() { requestAnimationFrame(() => { const el = this.chatScrollRef.current; if (el) el.scrollTop = el.scrollHeight; }); }
+  miniChatSend = () => {
+    const el = this.miniChatInputRef.current;
+    if (!el || this.state.miniTyping) return;
+    const val = (el.value || '').trim();
+    if (!val) return;
+    el.value = '';
+    this.setState(s => ({ chatExtra: s.chatExtra.concat([{ role: 'user', text: val }]), miniTyping: true }));
+    this._miniScroll();
+    this._miniT = setTimeout(() => {
+      const replies = [
+        'Dazu liegen mir die Aufnahmen vom letzten Rundgang vor. Kurz gefasst: kein akuter Handlungsbedarf — ich beobachte das Bauteil weiter.',
+        'Ich habe das mit dem Bestandsmodell abgeglichen. Die Details finden Sie im Dashboard unter „Maßnahmen“ — soll ich sie priorisieren?',
+        'Auf Basis der erfassten Bauteile empfehle ich, das bei der nächsten Begehung mit aufzunehmen. Ich habe es notiert.'
+      ];
+      this._miniIdx = ((this._miniIdx || 0) + 1) % replies.length;
+      this.setState(s => ({ chatExtra: s.chatExtra.concat([{ role: 'model', text: replies[this._miniIdx] }]), miniTyping: false }));
+      this._miniScroll();
+    }, 1100);
+  };
+  miniChatKey = (e) => { if (e.key === 'Enter') { e.preventDefault(); this.miniChatSend(); } };
+
+  // ---- Maßnahmen-Zeile ↔ Gebäude-Punkt ----
+  mRow1Enter = () => this.setState({ hoverM: 1 });
+  mRow2Enter = () => this.setState({ hoverM: 2 });
+  mRow3Enter = () => this.setState({ hoverM: 3 });
+  mRow4Enter = () => this.setState({ hoverM: 4 });
+  mRowLeave = () => this.setState({ hoverM: 0 });
+
+  componentDidMount() {
+    const root = this._root || document;
+    this._root = root;
+    this._chatStarted = false;
+
+    // Reveal & Sektions-Trigger per IntersectionObserver (kein Scroll-Handler)
+    this._io = new IntersectionObserver((entries) => {
+      entries.forEach((en) => {
+        if (!en.isIntersecting) return;
+        if (en.target.hasAttribute('data-reveal')) en.target.setAttribute('data-shown', '');
+        if (en.target.hasAttribute('data-once')) en.target.setAttribute('data-go', '1');
+        this._io.unobserve(en.target);
+      });
+    }, { rootMargin: '0px 0px -9% 0px' });
+    this._ioTrig = new IntersectionObserver((entries) => {
+      entries.forEach((en) => {
+        if (!en.isIntersecting) return;
+        if (en.target.hasAttribute('data-chat') && !this._chatStarted) { this._chatStarted = true; this._runChat(); }
+        this._ioTrig.unobserve(en.target);
+      });
+    }, { rootMargin: '0px 0px -38% 0px' });
+    this._observeReveals = () => {
+      root.querySelectorAll('[data-reveal]:not([data-shown]),[data-once]:not([data-go])').forEach((el) => this._io.observe(el));
+      const chatSec = root.querySelector('[data-chat]');
+      if (chatSec && !this._chatStarted) this._ioTrig.observe(chatSec);
+    };
+    this._observeReveals();
+
+    window.addEventListener('keydown', this._onKeydown);
+    window.addEventListener('resize', this._onResizeNav, { passive: true });
+
+    // Scroll-Spy: markiert das aktuelle Kapitel im Header
+    this._spyIds = ['anwendung', 'funktion', 'prognose', 'rollen', 'preise', 'live', 'team', 'faq'];
+    this._spy = () => {
+      if (this._spyRaf) return;
+      this._spyRaf = requestAnimationFrame(() => {
+        this._spyRaf = 0;
+        const y = window.scrollY + 140;
+        let active = null;
+        for (const id of this._spyIds) {
+          const el = document.getElementById(id);
+          if (el && el.getBoundingClientRect().top + window.scrollY <= y) active = id;
+        }
+        if (active === this._spyActive) return;
+        this._spyActive = active;
+        (this._root || document).querySelectorAll('[data-navlink]').forEach((a) => {
+          a.classList.toggle('is-active', !!active && a.getAttribute('href') === ('#' + active));
+        });
+      });
+    };
+    window.addEventListener('scroll', this._spy, { passive: true });
+    requestAnimationFrame(this._spy);
+
+    // content-visibility:auto + Anker: Platzhalterhöhen ≠ echte Höhen → Zielposition nach dem Sprung nachkorrigieren
+    this._onHash = () => {
+      const el = location.hash && document.getElementById(location.hash.slice(1));
+      if (!el) return;
+      let n = 0;
+      const fix = () => {
+        const top = Math.max(0, el.getBoundingClientRect().top + window.scrollY - 76);
+        if (Math.abs(window.scrollY - top) > 4) window.scrollTo({ top, behavior: 'instant' });
+        if (++n < 10) requestAnimationFrame(fix);
+      };
+      requestAnimationFrame(fix);
+    };
+    window.addEventListener('hashchange', this._onHash);
+    if (location.hash) this._onHash();
+
+    this._reduceMotion = (window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches) || false;
+    // Hero-Bildwechsel nur, solange der Hero sichtbar ist
+    const heroEl = root.querySelector('[data-twin]');
+    if (heroEl && !this._reduceMotion) {
+      this._ioHero = new IntersectionObserver((ents) => {
+        const vis = ents.some((en) => en.isIntersecting);
+        if (vis && !this._heroInterval) this._startHeroLoop();
+        if (!vis && this._heroInterval) { clearInterval(this._heroInterval); this._heroInterval = null; }
+      }, { threshold: 0.15 });
+      this._ioHero.observe(heroEl);
+    }
+  }
+
+  componentDidUpdate() { if (this._observeReveals) this._observeReveals(); }
+
+  componentWillUnmount() {
+    window.removeEventListener('keydown', this._onKeydown);
+    window.removeEventListener('resize', this._onResizeNav);
+    window.removeEventListener('scroll', this._spy);
+    window.removeEventListener('hashchange', this._onHash);
+    if (this._io) this._io.disconnect();
+    if (this._ioTrig) this._ioTrig.disconnect();
+    if (this._ioHero) this._ioHero.disconnect();
+    if (this._spyRaf) cancelAnimationFrame(this._spyRaf);
+    clearTimeout(this._t);
+    clearInterval(this._heroInterval);
+    clearInterval(this._twinInterval);
+    clearTimeout(this._fwTimer);
+    clearTimeout(this._miniT);
+  }
+
+  _runChat() {
+    const total = this._chatCount || 4;
+    let i = 0;
+    const step = () => {
+      i++;
+      this.setState({ chatVisible: i });
+      requestAnimationFrame(() => { const el = this.chatScrollRef.current; if (el) el.scrollTop = el.scrollHeight; });
+      if (i < total) this._t = setTimeout(step, i === 1 ? 1100 : 1700);
+    };
+    this._t = setTimeout(step, 500);
+  }
+
+  _startHeroLoop() {
+    // Sucher und Gebäudemodell laufen synchron: Scan links löst Befund rechts aus.
+    // heroIdx 0=Flachdach→Twin Dach(0), 1=Außenfassade→Twin Fassade(2), 2=Heizanlage→Twin Heizanlage(1)
+    const twinMap = [0, 2, 1];
+    this._heroInterval = setInterval(() => {
+      this.setState({ heroFade: 0 });
+      setTimeout(() => {
+        this.setState(s => {
+          const ni = (s.heroIdx + 1) % 3;
+          return { heroIdx: ni, heroFade: 1, twinIdx: twinMap[ni] };
+        });
+      }, 450);
+    }, 4500);
+  }
+
+  rootRef = (el) => { if (el) this._root = el; };
+
+  renderVals() {
+    // chat
+    const allMsgs = [
+      { role: 'model', text: 'Guten Morgen. Ich habe die Fotos vom letzten Rundgang ausgewertet und den CAPEX-Plan aktualisiert.' },
+      { role: 'user', text: 'Gibt es etwas, das ich wissen sollte?' },
+      { role: 'model', text: 'Die Dachabdichtung zeigt an zwei Nähten erste Ablösungen. Ich empfehle, die Reparatur auf 2027 vorzuziehen — sonst drohen Folgeschäden an der Dämmung.' },
+      { role: 'model', text: 'Wenn Sie die Arbeiten mit der Rinnenwartung bündeln, fallen die Gerüstkosten nur einmal an. Soll ich beides für 2027 in den Maßnahmenplan übernehmen?' }
+    ];
+    this._chatCount = allMsgs.length;
+
+    const chatMessages = allMsgs.slice(0, this.state.chatVisible).concat(this.state.chatExtra).map((m) => {
+      const isModel = m.role === 'model';
+      return {
+        text: m.text,
+        labelText: isModel ? 'CAIPEX · Gebäudemodell' : 'Sie',
+        rowStyle: { display: 'flex', justifyContent: isModel ? 'flex-start' : 'flex-end' },
+        bubbleStyle: isModel
+          ? { maxWidth: '82%', background: '#EDF0EF', color: '#0F2C27', borderRadius: '4px 18px 18px 18px', padding: '15px 18px', animation: 'msgIn .5s cubic-bezier(.2,.7,.2,1) both' }
+          : { maxWidth: '82%', background: '#0F2C27', color: '#EDF0EF', borderRadius: '18px 18px 4px 18px', padding: '15px 18px', animation: 'msgIn .5s cubic-bezier(.2,.7,.2,1) both' }
+      };
+    });
+    const chatTyping = (this.state.chatVisible > 0 && this.state.chatVisible < allMsgs.length) || this.state.miniTyping;
+
+    // ---- Mobile-Navigation ----
+    const mobileOpen = this.state.mobileOpen;
+    const mobileExpanded = mobileOpen ? 'true' : 'false';
+    const mobileDrawerStyle = {
+      position: 'fixed', top: '60px', left: 0, right: 0, zIndex: 49,
+      background: '#0F2C27', borderBottom: '1px solid rgba(237,240,239,0.12)',
+      padding: '14px 22px 26px', display: 'flex', flexDirection: 'column',
+      maxHeight: 'calc(100vh - 60px)', overflowY: 'auto',
+      transform: mobileOpen ? 'translateY(0)' : 'translateY(-10px)',
+      opacity: mobileOpen ? 1 : 0,
+      pointerEvents: mobileOpen ? 'auto' : 'none',
+      transition: 'opacity .3s ease, transform .3s cubic-bezier(.16,.7,.2,1)'
+    };
+    const mobileBackdropStyle = {
+      position: 'fixed', top: '60px', left: 0, right: 0, bottom: 0, zIndex: 48,
+      background: 'rgba(15,44,39,0.45)', backdropFilter: 'blur(2px)', WebkitBackdropFilter: 'blur(2px)',
+      opacity: mobileOpen ? 1 : 0,
+      pointerEvents: mobileOpen ? 'auto' : 'none',
+      transition: 'opacity .3s ease'
+    };
+
+    // ---- Hero: Sucher-Bildwechsel ----
+    const heroPhotos = [
+      { bauteil: 'Flachdach', befund: 'Nahtablösungen', color: '#960018', objPos: '50% 50%', pos: { top: '50%', left: '16px' } },
+      { bauteil: 'Außenfassade', befund: 'Zustand gut', color: '#0F2C27', objPos: '50% 36%', pos: { top: '22%', right: '16px' } },
+      { bauteil: 'Heizanlage', befund: 'Austausch ~5 J.', color: '#8b8680', objPos: '50% 44%', pos: { top: '46%', left: '18px' } },
+    ];
+    const heroIdx = this.state.heroIdx;
+    const heroPhoto = heroPhotos[heroIdx];
+    const heroFade = this.state.heroFade;
+    const heroImgBase = { position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover', transition: 'opacity 0.9s ease' };
+    const heroImg0Style = { ...heroImgBase, objectPosition: heroPhotos[0].objPos, opacity: heroIdx === 0 ? 1 : 0 };
+    const heroImg1Style = { ...heroImgBase, objectPosition: heroPhotos[1].objPos, opacity: heroIdx === 1 ? 1 : 0 };
+    const heroImg2Style = { ...heroImgBase, objectPosition: heroPhotos[2].objPos, opacity: heroIdx === 2 ? 1 : 0 };
+    const heroTagWrapStyle = { position: 'absolute', ...heroPhoto.pos, background: 'rgba(237,240,239,0.95)', borderRadius: '8px', padding: '7px 11px', fontSize: '0.75rem', fontWeight: 700, boxShadow: '0 8px 24px -10px rgba(0,0,0,0.5)', opacity: heroFade, transition: 'opacity 0.4s ease, top 0.5s ease, left 0.5s ease, right 0.5s ease' };
+    const heroTagBefundStyle = { color: heroPhoto.color, fontFamily: "'Schibsted Grotesk'", fontSize: '0.75rem', fontWeight: 700 };
+    const heroDotStyle = (active) => ({ width: '18px', height: '2px', borderRadius: '2px', background: active ? 'rgba(237,240,239,0.95)' : 'rgba(237,240,239,0.28)', transition: 'background 0.4s ease' });
+
+    // ---- Digital Twin: jahresbasierte Empfehlungen ----
+    const twinItems = [
+      { year: '2027', comp: 'Dach', rec: 'Abdichtung prüfen — erste Nahtschäden zeichnen sich ab.', color: '#8b8680', pos: { top: '14%', left: '66%' } },
+      { year: '2029', comp: 'Heizanlage', rec: 'Austausch einplanen — Effizienz fällt spürbar.', color: '#960018', pos: { top: '80%', left: '56%' } },
+      { year: '2032', comp: 'Fassade', rec: 'Reinigung — noch kein akuter Handlungsbedarf.', color: '#0F2C27', pos: { top: '48%', left: '63%' } },
+    ];
+    const twinIdx = this.state.twinIdx;
+    const twinItem = twinItems[twinIdx];
+    const twinRGB = { '#F15200': '241,82,0', '#8b8680': '139,134,128', '#960018': '150,0,24', '#0F2C27': '15,44,39' };
+    const twinDotStyle = (i) => {
+      const it = twinItems[i];
+      const active = i === twinIdx;
+      const rgb = twinRGB[it.color];
+      return {
+        position: 'absolute', top: it.pos.top, left: it.pos.left,
+        width: '12px', height: '12px', marginTop: '-6px', marginLeft: '-6px',
+        borderRadius: '50%',
+        background: active ? it.color : 'rgba(237,240,239,0.5)',
+        border: '2px solid rgba(237,240,239,0.92)',
+        boxShadow: active ? ('0 0 0 6px rgba(' + rgb + ',0.20), 0 0 16px rgba(' + rgb + ',0.5)') : '0 1px 3px rgba(0,0,0,0.3)',
+        transition: 'background 0.4s ease, box-shadow 0.4s ease',
+        zIndex: active ? 3 : 2
+      };
+    };
+    const twinYearBadgeStyle = { fontFamily: "'Schibsted Grotesk'", fontSize: '0.75rem', fontWeight: 700, letterSpacing: '0.03em', color: '#EDF0EF', background: twinItem.color, padding: '3px 9px', borderRadius: '2px' };
+
+    const rightTab = this.state.rightTab || 'plan';
+    const isTabPlan = rightTab === 'plan';
+    const isTabChat = rightTab === 'chat';
+    const tabBase = "font-family:'Schibsted Grotesk';font-weight:700;font-size:0.84rem;padding:11px 22px;border-radius:4px;cursor:pointer;border:1.5px solid rgba(15,44,39,0.15);transition:background-color .2s ease,color .2s ease,border-color .2s ease;";
+    const tabPlanStyle = tabBase + (isTabPlan ? 'background:#0F2C27;color:#EDF0EF;border-color:#0F2C27;' : 'background:#fff;color:#0F2C27;');
+    const tabChatStyle = tabBase + (isTabChat ? 'background:#0F2C27;color:#EDF0EF;border-color:#0F2C27;' : 'background:#fff;color:#0F2C27;');
+
+    // ---- Prognose: Maßnahmen-Zeilen Hover-Highlight ----
+    const hoverM = this.state.hoverM;
+    const rowStyle = (n, extra) => Object.assign({
+      display: 'grid', gridTemplateColumns: '50px 1fr 1fr', gap: '12px', padding: '10px 8px',
+      margin: '0 -8px', borderRadius: '6px', alignItems: 'start', cursor: 'default',
+      background: hoverM === n ? 'rgba(241,82,0,0.07)' : 'transparent',
+      transition: 'background .2s ease'
+    }, extra || {});
+    const row1Style = rowStyle(1, { borderBottom: '1px solid rgba(15,44,39,0.06)' });
+    const row2Style = rowStyle(2, { borderBottom: '1px solid rgba(15,44,39,0.06)' });
+    const row3Style = rowStyle(3, {});
+    const row4Style = rowStyle(4, { borderTop: '1px solid rgba(15,44,39,0.06)', marginTop: '2px', paddingTop: '10px' });
+
+    // ---- Prognose: Gebäude-Punkte, gekoppelt an Maßnahmen-Zeilen ----
+    const pDotStyle = (pos, active, base) => Object.assign({}, pos, {
+      position: 'absolute', width: '24px', height: '24px', borderRadius: '50%',
+      background: active ? '#F15200' : (base || '#8b8680'),
+      border: '2px solid rgba(237,240,239,0.92)',
+      boxShadow: active ? '0 0 0 8px rgba(241,82,0,0.22), 0 0 20px rgba(241,82,0,0.45)' : '0 2px 8px rgba(0,0,0,0.35)',
+      transform: active ? 'scale(1.18)' : 'none',
+      transition: 'background .3s ease, box-shadow .3s ease, transform .3s ease',
+      zIndex: 2, display: 'flex', alignItems: 'center', justifyContent: 'center', cursor: 'default'
+    });
+    const pLblStyle = (pos, active) => Object.assign({}, pos, {
+      position: 'absolute', zIndex: 3, pointerEvents: 'none',
+      background: 'rgba(237,240,239,0.96)', color: '#0F2C27',
+      fontFamily: "'Schibsted Grotesk'", fontWeight: 700, fontSize: '0.75rem',
+      padding: '5px 11px', borderRadius: '4px', whiteSpace: 'nowrap',
+      boxShadow: '0 8px 24px -10px rgba(0,0,0,0.5)',
+      opacity: active ? 1 : 0, transition: 'opacity .25s ease'
+    });
+    const pDot1Style = pDotStyle({ top: '70%', left: '28%' }, hoverM === 1, '#960018');
+    const pDot2Style = pDotStyle({ top: '9%', left: '52%' }, hoverM === 2, '#8b8680');
+    const pDot3Style = pDotStyle({ top: '73%', left: '70%' }, hoverM === 3, '#8b8680');
+    const pDot4Style = pDotStyle({ top: '11%', left: '72%' }, hoverM === 4, '#8b8680');
+    const pLbl1Style = pLblStyle({ top: 'calc(70% - 6px)', left: 'calc(28% + 34px)' }, hoverM === 1);
+    const pLbl2Style = pLblStyle({ top: 'calc(9% + 30px)', left: 'calc(52% - 30px)' }, hoverM === 2);
+    const pLbl3Style = pLblStyle({ top: 'calc(73% + 30px)', left: 'calc(70% - 120px)' }, hoverM === 3);
+    const pLbl4Style = pLblStyle({ top: 'calc(11% + 30px)', right: '8px' }, hoverM === 4);
+
+    return {
+      pDot1Style, pDot2Style, pDot3Style, pDot4Style,
+      pLbl1Style, pLbl2Style, pLbl3Style, pLbl4Style,
+      row1Style, row2Style, row3Style, row4Style,
+      openPdfViewer: this.openPdfViewer, closePdfViewer: this.closePdfViewer, stopEvt: this.stopEvt, pdfContainerRef: this.pdfContainerRef, pdfOpen: this.state.pdfOpen, pdfLoading: !!this.state.pdfLoading && !this.state.pdfError, pdfError: !!this.state.pdfError,
+      mRow1Enter: this.mRow1Enter, mRow2Enter: this.mRow2Enter, mRow3Enter: this.mRow3Enter, mRow4Enter: this.mRow4Enter, mRowLeave: this.mRowLeave,
+      miniChatInputRef: this.miniChatInputRef,
+      miniChatSend: this.miniChatSend, miniChatKey: this.miniChatKey,
+      rightTab, isTabPlan, isTabChat, tabPlanStyle, tabChatStyle,
+      setTabPlan: this.setTabPlan, setTabChat: this.setTabChat,
+      chatScrollRef: this.chatScrollRef,
+      rootRef: this.rootRef,
+      mobileExpanded, mobileDrawerStyle, mobileBackdropStyle,
+      toggleMobile: this.toggleMobile, closeMobile: this.closeMobile,
+      chatMessages, chatTyping,
+      heroImg0Style,
+      heroImg1Style,
+      heroImg2Style,
+      heroTagWrapStyle,
+      heroTagBauteil: heroPhoto.bauteil,
+      heroTagBefund: heroPhoto.befund,
+      heroTagBefundStyle,
+      heroDot0Style: heroDotStyle(this.state.heroIdx === 0),
+      heroDot1Style: heroDotStyle(this.state.heroIdx === 1),
+      heroDot2Style: heroDotStyle(this.state.heroIdx === 2),
+      twinDot0Style: twinDotStyle(0),
+      twinDot1Style: twinDotStyle(1),
+      twinDot2Style: twinDotStyle(2),
+      twinYearBadgeStyle,
+      twinYear: twinItem.year,
+      twinComponent: twinItem.comp,
+      twinRecommendation: twinItem.rec
+    };
+  }
+}
+</script>
+</body>
+</html>
